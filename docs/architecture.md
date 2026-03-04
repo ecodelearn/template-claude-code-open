@@ -1,32 +1,35 @@
 # Architecture — how the template works / Arquitetura — como o template funciona
 
-## The five pillars / Os cinco pilares
+## The system at a glance / O sistema em visão geral
 
 ```
 template-claude-code-open/
 │
-├── CLAUDE.md          [1] The map — loaded every session / O mapa — carregado em toda sessão
+├── CLAUDE.md              [1] Map — loaded every session / Mapa — carregado em toda sessão
 │
 └── .claude/
-    ├── memory/        [2] The memory — what the project learned / A memória — o que o projeto aprendeu
-    ├── specs/         [3] The specs — the state of work / As specs — o estado do trabalho
-    ├── skills/        [4] The skills — on-demand behaviors / As skills — comportamentos sob demanda
-    ├── agents/        [5] The agents — isolated workers / Os agentes — trabalhadores isolados
-    └── hooks/         [6] The hooks — automatic guardrails / Os hooks — guardrails automáticos
+    ├── memory/            [2] Project memory / Memória do projeto
+    ├── specs/             [3] Work state / Estado do trabalho
+    ├── skills/            [4] On-demand behaviors / Comportamentos sob demanda
+    ├── agents/            [5] Isolated workers / Trabalhadores isolados
+    ├── rules/             [6] Path-scoped context / Contexto por caminho de arquivo
+    ├── hooks/             [7] Automatic guardrails / Guardrails automáticos
+    ├── agent-memory/      [8] Persistent agent knowledge / Conhecimento persistente de agents
+    └── agent-memory-local/    Local agent memory / Memória local de agents (gitignored)
 ```
 
 ---
 
 ## 1. CLAUDE.md — the navigation map / o mapa de navegação
 
-Loaded automatically by Claude Code in **every session**. That's why it's kept minimal — just navigation and protocol.
+Loaded automatically by Claude Code in **every session**. / Carregado automaticamente em **toda sessão**. Kept intentionally minimal — every extra line costs tokens in every session for the entire life of the project. / Mantido intencionalmente mínimo — cada linha extra custa tokens em toda sessão ao longo da vida do projeto.
 
-Does not contain project rules. Contains only / Contém apenas:
-- Session protocol (what to read first)
-- Map of where everything is
-- Universal non-negotiable principles
+Contains only / Contém apenas:
+- Session protocol (what to read first) / Protocolo de sessão (o que ler primeiro)
+- Navigation map (where everything is) / Mapa de navegação (onde tudo está)
+- Universal non-negotiable principles / Princípios inegociáveis universais
 
-Real project rules live in `memory/MEMORY.md`.
+Real project rules live in `memory/MEMORY.md`. Detailed instructions live in skills and rules files. / Regras reais do projeto vivem em `memory/MEMORY.md`. Instruções detalhadas vivem em skills e rules.
 
 ---
 
@@ -36,133 +39,241 @@ Four files with distinct roles / Quatro arquivos com papéis distintos:
 
 | File / Arquivo | Role / Papel | Updated when / Atualizado quando |
 |----------------|--------------|----------------------------------|
-| `MEMORY.md` | Living project context | Whenever the state changes |
-| `lessons.md` | What worked and what didn't | When discovering something relevant |
-| `decisions.md` | Architectural decisions with the why | Before implementing significant changes |
-| `patterns.md` | Efficient patterns specific to the project | When consolidating an approach |
+| `MEMORY.md` | Living project context — stack, team, integrations / Contexto vivo | Whenever context changes / Ao mudar o contexto |
+| `lessons.md` | What worked and what didn't / O que funcionou e o que não funcionou | When discovering something relevant / Ao descobrir algo relevante |
+| `decisions.md` | Architectural decisions with the why / Decisões arquiteturais com o porquê | Before significant changes / Antes de mudanças significativas |
+| `patterns.md` | Efficient patterns specific to this project / Padrões eficientes | When consolidating an approach / Ao consolidar uma abordagem |
 
 **Learning cycle / Ciclo de aprendizado:**
 ```
-Session starts → Claude reads MEMORY.md + INDEX.md
-Work happens → Claude checks lessons.md before deciding
-Something is discovered → Claude updates lessons.md, decisions.md or patterns.md
-Next session → starts with accumulated context, without repeating errors
+Session starts / Sessão inicia  → Claude reads MEMORY.md + INDEX.md
+Work happens / Trabalho acontece → Claude checks lessons.md before technical decisions
+Something discovered / Algo descoberto → Claude updates lessons.md / decisions.md / patterns.md
+Next session / Próxima sessão → starts with accumulated context, without repeating errors
 ```
+
+**Memory systems — what lives where / Sistemas de memória — o que fica onde:**
+
+| System / Sistema | Location / Local | Who writes / Quem escreve | Shared via git? / Via git? |
+|------------------|------------------|---------------------------|---------------------------|
+| Project memory (manual) / Memória do projeto | `.claude/memory/` | Claude when instructed / Claude quando instruído | Yes / Sim |
+| Auto memory (Claude's notes) / Auto-memória | `~/.claude/projects/<repo>/memory/` | Claude automatically / Claude automaticamente | No — machine-local / Não — local |
+| Agent memory (project scope) / Memória de agent | `.claude/agent-memory/<agent>/` | Specific agent / Agent específico | Yes / Sim |
+| Agent memory (local scope) / Memória local de agent | `.claude/agent-memory-local/<agent>/` | Specific agent / Agent específico | No — gitignored / Não |
+
+Auto memory (`~/.claude/projects/`) is built by Claude automatically. The files in `.claude/memory/` are a separate manual system that Claude updates when explicitly instructed — they are versioned and shared with the team. / Auto-memória é construída por Claude automaticamente. Os arquivos em `.claude/memory/` são um sistema manual separado que Claude atualiza quando instruído — são versionados e compartilhados com o time.
 
 ---
 
 ## 3. specs/ — the state of work / o estado do trabalho
 
-Two pieces / Duas peças:
+**`INDEX.md`** — the control panel / o painel de controle. Read at the start of every session together with `MEMORY.md`. Shows in seconds what is in progress, in backlog, blocked and done. / Lido no início de toda sessão junto com `MEMORY.md`. Mostra em segundos o que está em andamento, no backlog, bloqueado e concluído.
 
-**`INDEX.md`** — the control panel. Read at the start of every session together with `MEMORY.md`. Shows in seconds what is in progress, in backlog, blocked and done.
-
-**`[feature-slug].md`** — one file per feature or phase. Contains five key sections:
+**`[feature-slug].md`** — one file per feature or phase / um arquivo por feature ou fase. Five key sections / Cinco seções-chave:
 
 | Section / Seção | When to fill / Quando preencher | Purpose / Para quê serve |
-|-----------------|----------------------------------|--------------------------|
-| Acceptance criteria | Before implementing | Defines what is "done" — verifiable and specific |
-| Tasks | During implementation | Progress checklist |
-| How to resume | Whenever pausing | Allows any dev to continue without briefing |
-| Verification | When done | Real evidence that it works (tests, commands, results) |
-| Implementation notes | Continuously | Minor decisions, gotchas, references |
+|-----------------|--------------------------------|--------------------------|
+| Acceptance criteria / Critérios de aceite | Before implementing / Antes de implementar | Defines what "done" means — verifiable, specific |
+| Tasks / Tarefas | During implementation / Durante a implementação | Progress checklist |
+| How to resume / Como retomar | Whenever pausing / Ao pausar | Any dev can continue without briefing |
+| Verification / Verificação | When done / Ao concluir | Real evidence: tests, commands, results |
+| Implementation notes / Notas de implementação | Continuously / Continuamente | Minor decisions, gotchas, references |
 
-**Why this is powerful for teams / Por que isso é poderoso para times:**
+**Why specs matter for teams / Por que specs importam para times:**
 ```
 Dev A works on feature-auth, pauses at 6pm
-  → updates "How to resume" in the spec with the exact state
+  → updates "How to resume" with the exact current state
 
-Dev B (or new session) opens the project next morning
-  → git pull → reads INDEX.md → reads feature-auth.md → knows exactly where to continue
+Dev B (or a new session) opens the project next morning
+  → git pull → reads INDEX.md → reads feature-auth.md
+  → continues exactly where Dev A stopped — no briefing needed / sem briefing necessário
 ```
 
 ---
 
 ## 4. skills/ — on-demand behaviors / comportamentos sob demanda
 
-Skills are markdown files that teach Claude to execute specific tasks in a standardized way. They are only loaded when invoked — they don't consume tokens the rest of the time.
+Skills are directories with a `SKILL.md` entrypoint. / Skills são diretórios com um entrypoint `SKILL.md`. They load into context only when invoked — they don't consume tokens between uses. / Carregam no contexto apenas quando invocadas — não consomem tokens entre os usos.
+
+```
+.claude/skills/<skill-name>/
+├── SKILL.md        ← instructions + YAML frontmatter (required / obrigatório)
+├── examples/       ← example outputs (optional / opcional)
+└── scripts/        ← scripts Claude can execute (optional / opcional)
+```
+
+**Frontmatter fields / Campos do frontmatter:**
+
+| Field / Campo | Effect / Efeito |
+|---------------|----------------|
+| `name` | Creates the `/slash-command` / Cria o `/slash-command` |
+| `description` | Claude uses this to decide when to load the skill / Claude usa para decidir quando carregar |
+| `disable-model-invocation: true` | Only you can invoke it / Apenas você pode invocar — Claude não dispara automaticamente |
+| `allowed-tools` | Tools available without permission prompt / Ferramentas sem prompt de permissão |
+| `model` | Model override for this skill / Modelo específico para esta skill |
+| `context: fork` | Runs in an isolated subagent context / Roda em contexto isolado de subagente |
+| `argument-hint` | Hint shown in autocomplete / Dica mostrada no autocomplete |
 
 **Included skills / Skills incluídas:**
 
-| Skill | When to use / Quando usar |
-|-------|---------------------------|
-| `project-init` | Onboarding of new blank project |
-| `project-adopt` | Onboarding of existing project — discovers code conventions |
-| `spec-create` | Creates a new spec for a feature |
-| `bugfix` | Systematic bug triage — reproduce → locate → fix → verify |
-| `pr-review` | Checklist before opening or reviewing PR |
-| `commit` | Standardized commit message format |
-| `deploy` | Deploy checklist and procedure |
-
-**Difference between `project-init` and `project-adopt` / Diferença entre `project-init` e `project-adopt`:**
-- `project-init` → blank project → defines conventions via interview
-- `project-adopt` → code already exists → uses the `researcher` agent to discover stack, conventions and in-progress work before asking any questions
+| Skill | Invocation / Invocação | When to use / Quando usar |
+|-------|------------------------|--------------------------|
+| `/project-init` | Manual only / Apenas manual | First session — new blank project / Primeira sessão — projeto novo em branco |
+| `/project-adopt` | Manual only / Apenas manual | Existing project receiving the structure / Projeto existente recebendo a estrutura |
+| `/spec-create` | Manual only / Apenas manual | Start a new feature or phase / Iniciar nova feature ou fase |
+| `/bugfix` | Manual only / Apenas manual | Bug report — systematic triage / Report de bug — triage sistemático |
+| `/pr-review` | Manual only / Apenas manual | Before opening or reviewing a PR / Antes de abrir ou revisar um PR |
+| `/commit` | Manual only / Apenas manual | Format and validate commit message / Formatar e validar mensagem de commit |
+| `/deploy` | Manual only / Apenas manual | Before any deploy — never auto-triggered / Antes de qualquer deploy — nunca auto-disparado |
 
 ---
 
 ## 5. agents/ — isolated workers / trabalhadores isolados
 
-Agents only have access to the tools defined in their file. This ensures that / Isso garante que:
-- `code-reviewer` **never modifies** files — only reads and analyzes
-- `researcher` **never modifies** files — only explores and maps
-- `planner` **never writes production code** — only generates documents
+Agents run in their own context window with a custom system prompt, specific tool access, and independent permissions. / Agents rodam em seu próprio contexto com system prompt customizado, acesso restrito a ferramentas e permissões independentes. Claude delegates to them based on the `description` field. / Claude delega para eles com base no campo `description`.
 
-**Why isolation matters / Por que isolamento importa:**
-A review agent with full access could "help" by modifying the code it is reviewing. Isolation ensures separation of responsibilities.
+**Isolation levels / Níveis de isolamento:**
+
+| Configuration / Configuração | Effect / Efeito |
+|------------------------------|----------------|
+| `tools: Read, Glob, Grep` | Read-only — cannot modify files / Somente leitura |
+| `isolation: worktree` | Runs on a temporary git worktree — safe for large operations / Worktree temporária |
+| `memory: project` | Writes learnings to `.claude/agent-memory/<name>/` — shared / Compartilhado com o time |
+| `model: haiku` | Faster, cheaper model (good for exploration / bom para exploração) |
+
+**Included agents / Agents incluídos:**
+
+| Agent / Agente | Isolation / Isolamento | Memory / Memória | Purpose / Propósito |
+|----------------|------------------------|------------------|---------------------|
+| `code-reviewer` | worktree | — | Reviews code, never modifies / Revisa código, nunca modifica |
+| `researcher` | worktree | project | Explores codebase, builds knowledge / Explora e acumula conhecimento |
+| `planner` | — | — | Generates PRDs and specs / Gera PRDs e specs |
 
 ---
 
-## 6. hooks/ — automatic guardrails / guardrails automáticos
+## 6. rules/ — path-scoped context / contexto por caminho de arquivo
 
-Two hooks that run without needing to be invoked / Dois hooks que rodam sem precisar ser invocados:
+Rules are markdown files in `.claude/rules/` that load automatically when Claude works with matching files. / Regras são arquivos markdown em `.claude/rules/` que carregam automaticamente quando Claude trabalha com arquivos correspondentes.
 
-**`block-destructive.sh`** (PreToolUse)
-- Intercepts every Bash command before executing
-- Blocks: `rm -rf`, `git push --force`, `DROP TABLE`, `chmod -R 777`, etc.
-- Exit code 2 = command blocked with explanatory message
+**Without rules / Sem rules (old approach / abordagem antiga):**
+```
+Every session / Toda sessão: CLAUDE.md + MEMORY.md + all project rules = always full token cost
+```
 
-**`auto-format.sh`** (PostToolUse)
-- Runs after each file edit (Edit or Write)
-- Detects the extension and applies the available formatter
-- Supports: prettier (JS/TS), ruff/black (Python), gofmt (Go), rustfmt (Rust), shfmt (Bash)
-- Silent failure if formatter is not installed
+**With rules / Com rules (path-scoped):**
+```
+Editing a React component: loads frontend.md only / carrega apenas frontend.md
+Editing an API route:      loads api.md only / carrega apenas api.md
+Editing a migration:       loads migrations.md only / carrega apenas migrations.md
+Editing README:            loads nothing extra / não carrega nada extra
+```
+
+**Format / Formato:**
+```markdown
+---
+paths:
+  - "src/**/*.tsx"
+  - "src/**/*.jsx"
+---
+
+# Frontend conventions / Convenções de frontend
+
+[Rules that only apply when editing these files / Regras que se aplicam apenas ao editar estes arquivos]
+```
+
+Rules without a `paths:` field load unconditionally alongside CLAUDE.md. / Regras sem campo `paths:` carregam incondicionalmente junto com CLAUDE.md.
+
+---
+
+## 7. hooks/ — automatic guardrails / guardrails automáticos
+
+Hooks fire automatically at specific lifecycle points. No invocation needed. / Hooks disparam automaticamente em pontos específicos do ciclo de vida. Sem invocação necessária.
+
+**Four hook types / Quatro tipos de hook (official / oficiais):**
+
+| Type / Tipo | How it works / Como funciona | Best for / Melhor para |
+|-------------|------------------------------|------------------------|
+| `command` | Runs a shell script / Roda um script shell | Blocking dangerous commands, formatting / Bloqueio, formatação |
+| `http` | POSTs event JSON to an endpoint / POST JSON para endpoint | External integrations, logging / Integrações externas |
+| `prompt` | Sends a prompt to Claude for evaluation / Prompt para Claude avaliar | Quality gates — "does this commit follow convention?" |
+| `agent` | Spawns a subagent with tools / Spawna subagente com ferramentas | Complex validation that needs to read files / Validação complexa |
+
+**Key hook events / Eventos-chave:**
+
+| Event / Evento | When it fires / Quando dispara | Blockable / Bloqueável? |
+|----------------|-------------------------------|------------------------|
+| `PreToolUse` | Before any tool call / Antes de qualquer chamada de ferramenta | Yes / Sim |
+| `PostToolUse` | After tool call succeeds / Após sucesso da chamada | No |
+| `SessionStart` | When session begins / Ao iniciar sessão | No |
+| `SessionEnd` | When session terminates / Ao encerrar sessão | No |
+| `Stop` | When Claude finishes responding / Quando Claude termina | Yes / Sim |
+| `UserPromptSubmit` | Before Claude processes your prompt / Antes de Claude processar | Yes / Sim |
+| `SubagentStart/Stop` | Agent lifecycle / Ciclo de vida de agent | No |
+| `PreCompact` | Before context compaction / Antes da compactação | No |
+
+**Included hooks / Hooks incluídos:**
+
+| Hook | Event / Evento | Type / Tipo | Behavior / Comportamento |
+|------|----------------|-------------|--------------------------|
+| `block-destructive.sh` | PreToolUse / Bash | command | Blocks rm -rf, force push, DROP TABLE... |
+| `auto-format.sh` | PostToolUse / Edit+Write | command (async) | Runs formatter by file extension / Roda formatador por extensão |
+| `session-end-context.sh` | SessionEnd | command | Auto-commits memory+specs (opt-in) |
+
+---
+
+## 8. agent-memory/ — persistent agent knowledge / conhecimento persistente de agents
+
+When an agent has `memory: project`, it writes learnings to `.claude/agent-memory/<agent-name>/` — committed to git and shared with the team. / Quando um agent tem `memory: project`, escreve aprendizados em `.claude/agent-memory/<agent-name>/` — commitado e compartilhado com o time.
+
+```
+.claude/agent-memory/
+└── researcher/
+    ├── MEMORY.md         ← index, loaded at every researcher invocation / índice
+    ├── architecture.md   ← codebase structure discoveries / descobertas de estrutura
+    └── conventions.md    ← patterns found in the code / padrões encontrados
+```
+
+The researcher agent builds institutional knowledge over time: / O agent researcher acumula conhecimento institucional ao longo do tempo:
+- First invocation: explores from scratch / Primeira invocação: explora do zero
+- Later invocations: reads its own memory first / Invocações posteriores: lê a própria memória primeiro
+- New team member clones: gets all accumulated knowledge / Novo membro clona: recebe todo o conhecimento acumulado
 
 ---
 
 ## Execution principles / Princípios de execução
 
-**Stop-the-line** — when facing unexpected failure (breaking test, wrong behavior, build error):
-1. Stop adding code
-2. Preserve the evidence (log, stack trace, repro steps)
-3. Re-plan with the new information
+**Stop-the-line** — when facing unexpected failure / ao enfrentar falha inesperada:
+1. Stop adding code / Pare de adicionar código
+2. Preserve the evidence (log, stack trace, repro steps) / Preserve as evidências
+3. Re-plan with the new information / Replaneje com as novas informações
 
-The goal is not to stack code on top of an error. A problem ignored in the middle of the work becomes two problems at the end.
+Never stack code on top of an error. / Nunca empilhe código em cima de um erro.
 
-**Definition of Done** — a task is only complete when:
-- Behavior satisfies the acceptance criteria of the spec
-- Tests passing (or documented reason for not having run)
-- "Verification" section of the spec has real evidence: command run + result
+**Definition of Done / Definição de Pronto** — a task is only complete when / uma tarefa só está completa quando:
+- Behavior satisfies the acceptance criteria in the spec / Comportamento satisfaz os critérios de aceite
+- Tests passing / Testes passando
+- "Verification" section filled with real evidence: command run + result / Seção "Verification" preenchida com evidência real
 
-"Looks right" is not done.
+"Looks right" is not done. / "Parece certo" não é pronto.
 
 ---
 
 ## Token strategy / Estratégia de tokens
 
-The system is designed to be economical / O sistema é desenhado para ser econômico:
-
 ```
-Always loaded (every session) / Sempre carregado (toda sessão):
-  CLAUDE.md         ~40 lines
-  MEMORY.md         ~20-40 lines (grows with the project)
-  specs/INDEX.md    ~10-30 lines (depends on number of features)
+Always loaded / Sempre carregado (every session / toda sessão):
+  CLAUDE.md              ~40 lines / linhas
+  MEMORY.md              ~20–50 lines / linhas
+  specs/INDEX.md         ~10–30 lines / linhas
+  rules/ (matching path) ~20–50 lines per active rule / por regra ativa
 
 Loaded on demand / Carregado sob demanda:
-  lessons.md        only when checking approaches
-  decisions.md      only when planning changes
-  skills/           only when invoked
-  agents/           only when invoked
-  references.md     only before web search
+  lessons.md             only when checking approaches / só ao verificar abordagens
+  decisions.md           only when planning / só ao planejar
+  skills/                only when invoked / só ao invocar (/skill-name)
+  agents/                only when delegated to / só ao delegar
+  references.md          only before web search / só antes de web search
+  agent-memory/          only when the specific agent runs / só ao rodar o agent
 ```
 
-The minimal `CLAUDE.md` is intentional: every extra line costs tokens in **every session** throughout the life of the project.
+The minimal `CLAUDE.md` and path-scoped `rules/` keep the constant token cost low across the entire life of the project. / O `CLAUDE.md` mínimo e as `rules/` por caminho mantêm o custo constante de tokens baixo ao longo de toda a vida do projeto.
