@@ -93,3 +93,12 @@ Execute in order:
    - Write in the chosen language
 
 5. **Confirm to the user** what was configured and ask if there are adjustments
+
+6. **Commit the initialization**
+   - Stage all files modified in this skill: `CLAUDE.md`, `.claude/memory/MEMORY.md`, `.claude/references.md`, and `README_MCP.md` (if created)
+   - Create commit: `chore: initialize project [slug] from template`
+   - Show the commit summary to the user
+   - Ask if they want to push (`git push`)
+
+7. **Prompt for next step**
+   - Tell the user: "Run `/spec-create` to plan your first feature. When done, run `/project-seal` to commit the spec and finalize the transition from template to project."

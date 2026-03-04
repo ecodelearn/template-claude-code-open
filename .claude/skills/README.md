@@ -5,6 +5,7 @@ Invoke directly with `/skill-name` or let Claude invoke automatically when relev
 | Skill | Directory | When to use |
 |-------|-----------|-------------|
 | `/project-init` | `project-init/` | First session — new blank project |
+| `/project-seal` | `project-seal/` | After project-init + first spec — commits setup and seals the template |
 | `/project-adopt` | `project-adopt/` | Existing project receiving the structure for the first time |
 | `/spec-create` | `spec-create/` | Start a new feature or phase |
 | `/bugfix` | `bugfix/` | Bug report — systematic triage until verified fix |

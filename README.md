@@ -24,7 +24,8 @@ First time / Primeira vez
   → Claude detects empty MEMORY.md → runs /project-init
   → Asks: "English or Português?" — you choose once
   → All questions, responses and generated files in your language
-  → Project is fully configured in minutes
+  → Project is fully configured and committed in minutes
+  → /spec-create [feature] → /project-seal → git history reflects the real project
 
 Every session after / Toda sessão depois
   → Claude reads MEMORY.md (context, rules, language)
@@ -83,6 +84,7 @@ template-claude-code-open/
     ├── settings.local.json.example   # Personal hooks template / Template para hooks pessoais
     ├── skills/                       # /slash-commands
     │   ├── project-init/SKILL.md     # Onboarding — new blank project / projeto novo em branco
+    │   ├── project-seal/SKILL.md     # Seals template → real project in git / Sela o template no git
     │   ├── project-adopt/SKILL.md    # Onboarding — existing project / projeto existente
     │   ├── spec-create/SKILL.md      # Creates spec for new feature / Cria spec para nova feature
     │   ├── bugfix/SKILL.md           # Systematic bug triage / Triage sistemático de bugs
@@ -119,6 +121,7 @@ template-claude-code-open/
 | Skill | When to invoke / Quando invocar |
 |-------|---------------------------------|
 | `/project-init` | New project — automatic onboarding / Projeto novo — onboarding automático |
+| `/project-seal` | After project-init + first spec — seals the template in git / Após project-init + primeira spec |
 | `/project-adopt` | Existing project / Projeto existente |
 | `/spec-create` | `/spec-create [feature]` |
 | `/bugfix` | `/bugfix [description]` |

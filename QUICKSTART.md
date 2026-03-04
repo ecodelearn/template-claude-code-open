@@ -72,6 +72,7 @@ Then you answer **7 conversational questions** — one at a time: / Em seguida v
 - `CLAUDE.md` updated with the real name and rules / atualizado com nome e regras reais
 - `references.md` populated with official lib links / populado com links oficiais das libs
 - `README_MCP.md` created with integration setup instructions (if integrations were specified / se integrações foram especificadas)
+- All files committed to git: `chore: initialize project [slug] from template`
 
 ---
 
@@ -85,7 +86,17 @@ Claude creates `.claude/specs/feature-auth.md` and updates `specs/INDEX.md`.
 
 ---
 
-## Step 5 — Start implementing / Passo 5 — Começar a implementar
+## Step 5 — Seal the project / Passo 5 — Selar o projeto
+
+```
+/project-seal
+```
+
+Commits all spec files and finalizes the transition from template to real project. After this, the git history reflects your project — not the blank template. / Commita todos os arquivos de spec e finaliza a transição do template para o projeto real. Após isso, o histórico do git reflete o seu projeto — não o template em branco.
+
+---
+
+## Step 6 — Start implementing / Passo 6 — Começar a implementar
 
 ```
 implement the feature-auth spec
@@ -119,7 +130,8 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 | What to do / O que fazer | Command / Comando |
 |--------------------------|-------------------|
-| New team member onboarding / Onboarding de novo membro | `/project-init` |
+| New project onboarding / Onboarding de projeto novo | `/project-init` |
+| Seal template after first spec / Selar template após primeira spec | `/project-seal` |
 | Start new feature / Iniciar nova feature | `/spec-create [feature]` |
 | Investigate and fix a bug / Investigar e corrigir bug | `/bugfix [description]` |
 | Review before opening PR / Revisar antes de abrir PR | `/pr-review` |
