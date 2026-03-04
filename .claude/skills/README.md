@@ -1,26 +1,54 @@
-# Skills available / Skills disponíveis
+# Skills available
 
-Mention the skill name in the conversation to activate it. Skills are loaded on demand — they don't consume tokens until invoked.
-Mencione o nome da skill na conversa para ativá-la. Skills são carregadas sob demanda — não consomem tokens até serem invocadas.
+Invoke directly with `/skill-name` or let Claude invoke automatically when relevant (unless `disable-model-invocation: true`).
 
-| Skill | File / Arquivo | When to use / Quando usar |
-|-------|----------------|---------------------------|
-| `project-init` | `.claude/skills/project-init.md` | First session — new blank project / Primeira sessão — projeto novo em branco |
-| `project-adopt` | `.claude/skills/project-adopt.md` | Existing project receiving the structure for the first time / Projeto existente recebendo a estrutura pela primeira vez |
-| `spec-create` | `.claude/skills/spec-create.md` | Start a new feature or phase / Iniciar nova feature ou fase |
-| `bugfix` | `.claude/skills/bugfix.md` | Bug report — systematic triage until verified fix / Report de bug — triage sistemático até fix verificado |
-| `pr-review` | `.claude/skills/pr-review.md` | Before opening or reviewing a PR / Antes de abrir ou revisar um PR |
-| `commit` | `.claude/skills/commit.md` | Format commit message / Formatar mensagem de commit |
-| `deploy` | `.claude/skills/deploy.md` | Before any deploy / Antes de qualquer deploy |
+| Skill | Directory | When to use |
+|-------|-----------|-------------|
+| `/project-init` | `project-init/` | First session — new blank project |
+| `/project-adopt` | `project-adopt/` | Existing project receiving the structure for the first time |
+| `/spec-create` | `spec-create/` | Start a new feature or phase |
+| `/bugfix` | `bugfix/` | Bug report — systematic triage until verified fix |
+| `/pr-review` | `pr-review/` | Before opening or reviewing a PR |
+| `/commit` | `commit/` | Format and validate commit message |
+| `/deploy` | `deploy/` | Before any deploy |
 
-## How to invoke / Como invocar
+## Structure
+
+Each skill is a directory with `SKILL.md` as the entrypoint:
 
 ```
-"execute project-init"
-"use skill spec-create for the authentication feature"
-"use a skill spec-create para a feature de autenticação"
-"follow the pr-review checklist"
-"siga o checklist de pr-review"
-"what is the commit format for this change?"
-"qual o formato de commit para esta mudança?"
+.claude/skills/<skill-name>/
+├── SKILL.md        ← instructions + YAML frontmatter (required)
+├── examples/       ← example outputs (optional)
+└── scripts/        ← scripts Claude can execute (optional)
 ```
+
+## Frontmatter fields (in SKILL.md)
+
+| Field | Description |
+|-------|-------------|
+| `name` | Slash-command name (e.g. `deploy` → `/deploy`) |
+| `description` | What the skill does — Claude uses this to decide when to apply it |
+| `disable-model-invocation` | `true` = only you can invoke it (Claude won't auto-trigger) |
+| `allowed-tools` | Tools Claude can use without asking permission when skill is active |
+| `model` | Model override for this skill |
+| `context: fork` | Run in an isolated subagent context |
+| `argument-hint` | Hint shown during autocomplete (e.g. `[feature-name]`) |
+
+## How to invoke
+
+```
+/project-init
+/spec-create user-authentication
+/bugfix checkout page crashes on mobile
+/deploy staging
+```
+
+## How to add a new skill
+
+```bash
+mkdir -p .claude/skills/my-skill
+# Create SKILL.md with frontmatter + instructions
+```
+
+Reference: https://code.claude.com/docs/en/skills

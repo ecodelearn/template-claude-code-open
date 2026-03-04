@@ -1,12 +1,18 @@
+---
+name: pr-review
+description: Checklist for opening or reviewing a pull request. Validates code quality, spec completion, tests, and security before any PR is opened or approved.
+disable-model-invocation: true
+---
+
 # Skill: pr-review
 
-**When to use / Quando usar:** Before opening a PR or when reviewing someone else's PR.
+**When to use:** Before opening a PR or when reviewing someone else's PR.
 
 ---
 
-## Checklist — opening a PR / abertura de PR
+## Checklist — opening a PR
 
-### Code / Código
+### Code
 - [ ] Simplest possible solution for the problem?
 - [ ] No error from `lessons.md` repeated?
 - [ ] No dead code, debug logs, or temporary comments
@@ -17,22 +23,22 @@
 - [ ] Spec updated with status `review`?
 - [ ] `INDEX.md` updated?
 
-### Tests / Testes
+### Tests
 - [ ] Happy path and error cases covered?
 - [ ] No test commented out or skipped without justification?
 
-### Security / Segurança
+### Security
 - [ ] No hardcoded credential or secret?
 - [ ] User inputs validated at system boundaries?
 
-### The PR itself / O PR em si
+### The PR itself
 - [ ] Title in format `type(scope): description` — e.g.: `feat(auth): add JWT refresh`
 - [ ] Description: WHAT changed + WHY (not how)
 - [ ] Atomic PR — one logical change per PR
 
 ---
 
-## Checklist — reviewing someone else's PR / revisão de PR alheio
+## Checklist — reviewing someone else's PR
 
 - [ ] Is the objective of the change clear?
 - [ ] Approach consistent with `decisions.md`?
@@ -42,6 +48,6 @@
 
 ---
 
-## After approval / Após aprovação
+## After approval
 
 Move the corresponding spec to status `done` and update the `INDEX.md` with the date and PR link.

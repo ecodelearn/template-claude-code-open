@@ -1,18 +1,25 @@
+---
+name: bugfix
+description: Systematic bug triage protocol. Use when receiving a bug report or unexpected behavior. Follows reproduce→locate→reduce→fix→guard→verify sequence.
+disable-model-invocation: true
+argument-hint: "[bug description]"
+---
+
 # Skill: bugfix
 
-**When to use / Quando usar:** When receiving a bug report or unexpected behavior. Replaces improvisation with a systematic process that avoids fixing symptoms instead of root causes.
+**When to use:** When receiving a bug report or unexpected behavior. Replaces improvisation with a systematic process that avoids fixing symptoms instead of root causes.
 
 ---
 
-## Triage — execute in this order, without skipping steps / execute nesta ordem, sem pular etapas
+## Triage — execute in this order, without skipping steps
 
-### 1. Reproduce / Reproduzir
+### 1. Reproduce
 Confirm you can reproduce the bug reliably before touching any code.
 - What is the input or sequence of actions that triggers the problem?
 - Is the bug deterministic or intermittent?
 - If intermittent: what is the occurrence rate?
 
-### 2. Locate / Localizar
+### 2. Locate
 Identify the layer where the failure occurs:
 - UI / frontend?
 - Business logic / API?
@@ -20,25 +27,25 @@ Identify the layer where the failure occurs:
 - External integration / network?
 - Build / tooling / environment?
 
-### 3. Reduce / Reduzir
+### 3. Reduce
 Isolate the minimum case that still reproduces the problem.
 - What is the smallest input that fails?
 - What is the smallest piece of code involved?
 - Does the problem exist in a clean environment (no previous state data)?
 
-### 4. Fix / Corrigir
+### 4. Fix
 Fix the **root cause**, not the symptom.
 - If the fix needs more than 20 lines, question whether you're attacking the right cause
 - Don't refactor adjacent code together with the fix — separate scope, separate commit
 - If you find other bugs along the way: record as issue/TODO, don't fix now
 
-### 5. Guard (regression coverage) / Guardar
+### 5. Guard (regression coverage)
 Add the smallest test that would have failed before the fix and passes now.
 - Unit tests for pure logic
 - Integration tests for boundaries (DB, network, I/O)
 - The test must be in the same commit as the fix
 
-### 6. Verify / Verificar
+### 6. Verify
 Confirm end-to-end for the original report:
 - Is the expected behavior correct?
 - Do existing tests still pass?
@@ -55,7 +62,7 @@ If at any step something unexpected happens:
 
 ---
 
-## Fix documentation template / Template de documentação do fix
+## Fix documentation template
 
 Fill when done — record in the spec or directly in `lessons.md`:
 
@@ -72,7 +79,7 @@ Fill when done — record in the spec or directly in `lessons.md`:
 
 ---
 
-## After the fix / Após o fix
+## After the fix
 
 - If the bug revealed a knowledge gap: add entry in `lessons.md`
 - If the fix required an architectural decision: record in `decisions.md`

@@ -1,12 +1,19 @@
+---
+name: spec-create
+description: Creates a formal spec for a new feature or phase. Use when starting any non-trivial implementation work.
+disable-model-invocation: true
+argument-hint: "[feature-name]"
+---
+
 # Skill: spec-create
 
-**When to use / Quando usar:** When starting a new feature, phase, or sprint. Can be invoked directly or after the `planner` agent generates an approved PRD.
+**When to use:** When starting a new feature, phase, or sprint. Can be invoked directly or after the `planner` agent generates an approved PRD.
 
 ---
 
-## Protocol / Protocolo
+## Protocol
 
-### If invoked without a ready PRD / Se invocada sem PRD pronto
+### If invoked without a ready PRD
 
 Collect the minimum information before creating:
 
@@ -15,13 +22,13 @@ Collect the minimum information before creating:
 3. "Does it depend on any other spec to start?"
 4. "What is the priority? (high / medium / low)"
 
-### If invoked after a planner PRD / Se invocada após PRD do planner
+### If invoked after a planner PRD
 
 Use the content of the approved PRD directly — don't ask what has already been answered.
 
 ---
 
-## Actions / Ações
+## Actions
 
 1. **Generate the feature slug** from the name
    - Format: `[type]-[name]` in lowercase with hyphens
@@ -42,6 +49,6 @@ Use the content of the approved PRD directly — don't ask what has already been
 
 ---
 
-## Expected result / Resultado esperado
+## Expected result
 
 A new spec in backlog, with enough context for any session or team member to start the work without needing additional briefing.

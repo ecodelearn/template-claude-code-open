@@ -4,26 +4,11 @@
 
 INPUT=$(cat)
 
-TOOL=$(echo "$INPUT" | python3 -c "
-import sys, json
-try:
-    d = json.load(sys.stdin)
-    print(d.get('tool_name', ''))
-except:
-    print('')
-" 2>/dev/null)
-
-# Only inspect Bash tool
+TOOL=$(echo "$INPUT" | jq -r '.tool_name // empty' 2>/dev/null)
 [[ "$TOOL" != "Bash" ]] && exit 0
 
-COMMAND=$(echo "$INPUT" | python3 -c "
-import sys, json
-try:
-    d = json.load(sys.stdin)
-    print(d.get('tool_input', {}).get('command', ''))
-except:
-    print('')
-" 2>/dev/null)
+COMMAND=$(echo "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null)
+[[ -z "$COMMAND" ]] && exit 0
 
 # Blocked patterns
 BLOCKED=(
@@ -42,9 +27,16 @@ BLOCKED=(
 
 for pattern in "${BLOCKED[@]}"; do
     if echo "$COMMAND" | grep -qi "$pattern"; then
-        echo "[BLOCKED] Dangerous command detected: '$pattern'"
-        echo "If truly necessary, run it manually in the terminal."
-        exit 2
+        jq -n \
+            --arg reason "Dangerous command blocked: '$pattern'. If truly necessary, run it manually in the terminal." \
+            '{
+                hookSpecificOutput: {
+                    hookEventName: "PreToolUse",
+                    permissionDecision: "deny",
+                    permissionDecisionReason: $reason
+                }
+            }'
+        exit 0
     fi
 done
 

@@ -1,11 +1,8 @@
-# Official References / Referências Oficiais
+# Official References
 
 > Check BEFORE doing a web search or implementing something.
-> Consulte ANTES de fazer web search ou implementar algo.
 > Always prefer official sources for best practices, code patterns and APIs.
-> Prefira sempre fontes oficiais para boas práticas, padrões de código e APIs.
 > The "This Project" section is filled by project-init or manually as the project evolves.
-> A seção "Deste Projeto" é preenchida pelo project-init ou manualmente conforme o projeto evolui.
 
 ---
 
@@ -13,9 +10,16 @@
 
 | Resource | URL | When to use |
 |----------|-----|-------------|
-| Official repository | https://github.com/anthropics/claude-code | Issues, changelog, source code |
-| Claude Code Cookbooks | https://github.com/anthropics/claude-cookbooks | Ready-to-use Claude Code examples |
-| Official skills | https://github.com/anthropics/skills | Reference skills maintained by Anthropic |
+| Full documentation | https://code.claude.com | Starting point for any Claude Code question |
+| Skills | https://code.claude.com/docs/en/skills | Creating/configuring skills, frontmatter fields, context: fork |
+| Sub-agents | https://code.claude.com/docs/en/sub-agents | Agent frontmatter, isolation: worktree, memory scopes |
+| Hooks reference | https://code.claude.com/docs/en/hooks | Hook events, types (command/http/prompt/agent), JSON output |
+| Hooks guide | https://code.claude.com/docs/en/hooks-guide | Quickstart with examples |
+| Memory & CLAUDE.md | https://code.claude.com/docs/en/memory | CLAUDE.md files, .claude/rules/ path routing, auto memory |
+| MCP servers | https://code.claude.com/docs/en/mcp | Configuring MCP integrations |
+| Settings | https://code.claude.com/docs/en/settings | settings.json, settings.local.json, permissions |
+| Common workflows | https://code.claude.com/docs/en/common-workflows | Worktrees, plan mode, extended thinking |
+| Features overview | https://code.claude.com/docs/en/features-overview | High-level overview of all features |
 
 ## Claude / Anthropic API
 
@@ -23,36 +27,22 @@
 |----------|-----|-------------|
 | Main documentation | https://platform.claude.com/docs/en/home | API, models, parameters, limits |
 | Anthropic Cookbook | https://github.com/anthropics/anthropic-cookbook | API usage patterns, practical examples |
-| Python SDK | https://github.com/anthropics/anthropic-sdk-python | Official Python SDK reference |
-| Node.js SDK | https://github.com/anthropics/anthropic-sdk-javascript | Official Node.js SDK reference |
-| Model Context Protocol | https://modelcontextprotocol.io/docs | Official MCP server documentation |
+| Model Context Protocol | https://modelcontextprotocol.io/docs | Official MCP specification |
 
-## How to use these references / Como usar estas referências
+## Context engineering
 
-**Before web search / Antes de web search:**
-Check if the question is covered by one of the sources above. Prefer official documentation over generic results.
-
-**When implementing features with Claude API / Ao implementar features com Claude API:**
-Check the Anthropic Cookbook for already validated patterns before creating from scratch.
-
-**When creating or configuring skills/hooks/agents / Ao criar ou configurar skills/hooks/agents:**
-Check the `claude-code` and `claude-cookbooks` repositories for reference examples.
-
-**When integrating an MCP server / Ao integrar um servidor MCP:**
-Check `modelcontextprotocol.io/docs` for the specification and `claude-code` for configuration examples.
+| Resource | URL | When to use |
+|----------|-----|-------------|
+| Agent Skills standard | https://agentskills.io | Open standard for skills (cross-tool compatibility) |
+| Context Engineering (Phil Schmid) | https://www.philschmid.de/context-engineering | Conceptual guide on structuring LLM context |
+| Advanced Context Engineering | https://github.com/humanlayer/advanced-context-engineering-for-coding-agents/blob/main/ace-fca.md | Patterns for memory, chunking and context management |
 
 ---
 
-## This Project / Deste Projeto
+## This Project
 
-> Filled by `project-init` or manually as the project grows.
-> Preenchido pelo `project-init` ou manualmente conforme o projeto cresce.
+> Filled by `/project-init` or manually as the project grows.
 > Add the official documentation for each lib, framework and tool used.
-
-<!--
-FORMAT:
-| [lib/framework name] | [official doc URL] | [when to consult] |
--->
 
 | Resource | URL | When to use |
 |----------|-----|-------------|

@@ -1,0 +1,16 @@
+{
+  "_readme": "Rename to settings.local.json — gitignored, never committed. For personal settings only.",
+  "hooks": {
+    "SessionEnd": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/session-end-context.sh",
+            "statusMessage": "Saving session context..."
+          }
+        ]
+      }
+    ]
+  }
+}

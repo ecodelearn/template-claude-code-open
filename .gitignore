@@ -1,23 +1,23 @@
-# Environment / Ambiente
+# Environment
 .env
 .env.local
 .env.*.local
 
-# Dependencies / Dependências
+# Dependencies
 node_modules/
 __pycache__/
 *.pyc
 .venv/
 venv/
 
-# Build output / Saída de build
+# Build output
 dist/
 build/
 out/
 .next/
 .nuxt/
 
-# OS / Sistema operacional
+# OS
 .DS_Store
 Thumbs.db
 
@@ -26,7 +26,12 @@ Thumbs.db
 *.swp
 *.swo
 
-# MCP (local only — not versioned / somente local — não versionado)
+# Claude Code — local only, never versioned
+CLAUDE.local.md
+.claude/settings.local.json
+.claude/agent-memory-local/
+
+# MCP — local config, never versioned
 README_MCP.md
 
 # Logs

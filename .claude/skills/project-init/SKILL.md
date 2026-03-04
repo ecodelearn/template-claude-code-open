@@ -1,16 +1,22 @@
+---
+name: project-init
+description: First-session onboarding for new blank projects. Run automatically when MEMORY.md has no context. Interviews the developer and configures all memory files.
+disable-model-invocation: true
+---
+
 # Skill: project-init
 
-**When to run / Quando executar:** Automatically when `.claude/memory/MEMORY.md` has no context filled in. Can be invoked manually with "execute project-init".
+**When to run:** Automatically when `.claude/memory/MEMORY.md` has no context filled in. Can be invoked manually with `/project-init`.
 
-**Objective / Objetivo:** Interview the developer, configure the project, and populate all memory files so any future session starts with full context — without re-explaining anything.
+**Objective:** Interview the developer, configure the project, and populate all memory files so any future session starts with full context — without re-explaining anything.
 
 ---
 
-## Interview protocol / Protocolo de entrevista
+## Interview protocol
 
 Conduct questions in sequence, one at a time. Wait for each answer before continuing. Be conversational.
 
-### 0 — Language preference ← START HERE / COMECE AQUI
+### 0 — Language preference ← START HERE
 
 Ask in both languages simultaneously, exactly once:
 
@@ -24,7 +30,6 @@ Qual idioma você prefere para trabalhar?
 ---
 
 From this point on, use ONLY the chosen language for all questions, responses, and generated file content.
-A partir daqui, use APENAS o idioma escolhido em tudo.
 
 Save the choice as `language: en` or `language: pt-br` in the MEMORY.md front matter.
 
@@ -65,7 +70,7 @@ Save the choice as `language: en` or `language: pt-br` in the MEMORY.md front ma
 
 ---
 
-## Actions after the interview / Ações após a entrevista
+## Actions after the interview
 
 Execute in order:
 

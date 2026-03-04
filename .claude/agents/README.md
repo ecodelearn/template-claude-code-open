@@ -1,23 +1,45 @@
-# Agents available / Agentes disponíveis
+# Agents available
 
-Invoke explicitly by name. Agents are isolated — they only have access to the tools defined in each one.
-Invoque explicitamente pelo nome. Agentes são isolados — têm acesso apenas às ferramentas definidas em cada um.
+Invoke explicitly by name. Agents run in their own context window with isolated tools and permissions.
 
-| Agent / Agente | File / Arquivo | When to use / Quando usar |
-|----------------|----------------|---------------------------|
-| `code-reviewer` | `.claude/agents/code-reviewer.md` | Analyze code without modifying anything / Analisar código sem modificar nada |
-| `researcher` | `.claude/agents/researcher.md` | Explore large repository, map structure / Explorar repositório grande, mapear estrutura |
-| `planner` | `.claude/agents/planner.md` | Generate PRD, implementation plan, create specs / Gerar PRD, plano de implementação, criar specs |
+| Agent | File | When to use |
+|-------|------|-------------|
+| `code-reviewer` | `code-reviewer.md` | Review code without modifying anything — isolated worktree |
+| `researcher` | `researcher.md` | Explore large repositories, map structure — isolated worktree, accumulates memory |
+| `planner` | `planner.md` | Generate PRDs and implementation plans before any code |
 
-## How to invoke / Como invocar
+## How to invoke
 
 ```
-"use the code-reviewer agent to analyze the auth module"
-"use o agente code-reviewer para analisar o módulo de auth"
-
-"use the researcher agent to map how the payment system works"
-"use o agente researcher para mapear como o sistema de pagamentos funciona"
-
-"use the planner agent to create a spec for the reports feature"
-"use o agente planner para criar uma spec da feature de relatórios"
+Use the code-reviewer agent to analyze the auth module
+Use the researcher agent to map how the payment system works
+Use the planner agent to create a spec for the reports feature
 ```
+
+## Key frontmatter fields
+
+| Field | Description |
+|-------|-------------|
+| `description` | **Critical** — the orchestrator reads only this to decide whether to delegate. Use strong keywords and "Use proactively..." |
+| `tools` | Allowed tools (allowlist). Inherits all if omitted |
+| `model` | `sonnet`, `opus`, `haiku`, or `inherit` |
+| `isolation: worktree` | Runs in a temporary git worktree — safe for read-heavy agents |
+| `memory: project` | Persistent memory at `.claude/agent-memory/<name>/` — committed to git, shared with team |
+| `memory: local` | Persistent memory at `.claude/agent-memory-local/<name>/` — gitignored, machine-local |
+
+## Memory scopes
+
+| Scope | Location | Committed to git? |
+|-------|----------|-------------------|
+| `user` | `~/.claude/agent-memory/<name>/` | No |
+| `project` | `.claude/agent-memory/<name>/` | Yes — shared with team |
+| `local` | `.claude/agent-memory-local/<name>/` | No — gitignored |
+
+## Adding a new agent
+
+Create `.claude/agents/<name>.md` with YAML frontmatter + system prompt body.
+
+Write a strong `description` — it's the only thing the orchestrator reads to decide delegation.
+Use "Use proactively" if you want Claude to delegate automatically.
+
+Reference: https://code.claude.com/docs/en/sub-agents

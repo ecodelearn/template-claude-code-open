@@ -1,10 +1,16 @@
+---
+name: commit
+description: Format and validate commit messages following Conventional Commits. Use before any git commit to ensure consistency.
+disable-model-invocation: true
+---
+
 # Skill: commit
 
-**When to use / Quando usar:** When formatting commit messages.
+**When to use:** When formatting commit messages.
 
 ---
 
-## Format / Formato
+## Format
 
 ```
 type(scope): imperative description in lowercase
@@ -14,19 +20,19 @@ type(scope): imperative description in lowercase
 [footer: breaking changes or closed issues]
 ```
 
-## Types / Tipos
+## Types
 
-| Type / Tipo | When to use / Quando usar |
-|-------------|---------------------------|
-| `feat` | New feature / Nova funcionalidade |
-| `fix` | Bug fix / Correção de bug |
-| `refactor` | Change without altering external behavior / Mudança sem alterar comportamento externo |
-| `docs` | Documentation / Documentação |
-| `test` | Tests / Testes |
+| Type | When to use |
+|------|-------------|
+| `feat` | New feature |
+| `fix` | Bug fix |
+| `refactor` | Change without altering external behavior |
+| `docs` | Documentation |
+| `test` | Tests |
 | `chore` | Build, deps, config, context (`.claude/`) |
-| `perf` | Performance improvement / Melhoria de performance |
+| `perf` | Performance improvement |
 
-## Rules / Regras
+## Rules
 
 - Imperative: "add feature" not "added feature"
 - Maximum 72 characters on the first line
@@ -34,7 +40,7 @@ type(scope): imperative description in lowercase
 - Scope = module or affected area (e.g.: `auth`, `orders`, `db`)
 - For project context updates: `chore(context): update memory/specs`
 
-## Examples / Exemplos
+## Examples
 
 ```
 feat(auth): add JWT refresh token rotation
