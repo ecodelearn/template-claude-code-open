@@ -29,7 +29,8 @@ Thumbs.db
 # Claude Code — local only, never versioned
 CLAUDE.local.md
 .claude/settings.local.json
-.claude/agent-memory-local/
+.claude/agent-memory-local/*
+!.claude/agent-memory-local/.gitkeep
 
 # MCP — local config, never versioned
 README_MCP.md
