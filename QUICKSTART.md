@@ -70,6 +70,7 @@ Then you answer **7 conversational questions** — one at a time: / Em seguida v
 **What is configured automatically / O que é configurado automaticamente:**
 - `MEMORY.md` filled with project context / preenchido com contexto do projeto
 - `CLAUDE.md` updated with the real name and rules / atualizado com nome e regras reais
+- `AGENTS.md` generated as universal mirror of CLAUDE.md / gerado como espelho universal do CLAUDE.md
 - `references.md` populated with official lib links / populado com links oficiais das libs
 - `README_MCP.md` created with integration setup instructions (if integrations were specified / se integrações foram especificadas)
 - All files committed to git: `chore: initialize project [slug] from template`
@@ -105,9 +106,32 @@ implemente a spec feature-auth
 
 Claude reads the spec, checks memory and lessons, and delivers code following the project rules. / Claude lê a spec, verifica a memória e lições, e entrega código seguindo as regras do projeto.
 
-> **Definition of Done / Definição de Pronto:** a spec is only marked as `done` when behavior is validated, tests pass and the "Verification" section is filled with real evidence. / uma spec só é marcada como `done` quando o comportamento está validado, os testes passam e a seção "Verification" está preenchida com evidência real. "Looks right" is not done. / "Parece certo" não é pronto.
+> **Definition of Done / Definição de Pronto:** a spec is only marked as `done` when behavior is validated, tests pass, the TDD cycle (Red → Green → Refactor) is verified and the "Verification" section is filled with real evidence. / uma spec só é marcada como `done` quando o comportamento está validado, os testes passam, o ciclo TDD (Red → Green → Refactor) está verificado e a seção "Verification" está preenchida com evidência real. "Looks right" is not done. / "Parece certo" não é pronto.
 
 ---
+
+## TDD Red/Green/Refactor — mandatory cycle / ciclo obrigatório
+
+Every issue (feature, bugfix, improvement) follows the TDD cycle: / Toda issue segue o ciclo TDD:
+
+1. **Red** — write the test **before** production code / escreva o teste **antes** do código de produção
+2. **Green** — implement the minimum code to pass / implemente o mínimo para passar
+3. **Refactor** — improve without breaking tests / melhore sem quebrar os testes
+
+The spec template (`specs/_template.md`) includes a dedicated checklist for the TDD cycle. The Definition of Done requires the TDD cycle to be verified. / O template de spec inclui um checklist dedicado para o ciclo TDD. A Definição de Pronto exige que o ciclo TDD seja verificado.
+
+## AGENTS.md — universal compatibility / compatibilidade universal
+
+The `AGENTS.md` at the root is a mirror of `CLAUDE.md` for tools that don't recognize the Claude Code format: / O `AGENTS.md` na raiz é um espelho do `CLAUDE.md` para ferramentas que não reconhecem o formato Claude Code:
+
+| Tool / Ferramenta | Recognizes / Reconhece |
+|-------------------|----------------------|
+| Claude Code | `CLAUDE.md` |
+| Cursor | `AGENTS.md` (`.cursorrules`) |
+| Windsurf | `AGENTS.md` |
+| Copilot | `AGENTS.md` (`.github/copilot-instructions.md`) |
+
+`project-init` generates both `CLAUDE.md` and `AGENTS.md` automatically. `CLAUDE.md` is the source of truth — keep them in sync if editing manually.
 
 ## Daily flow / Fluxo diário
 
@@ -150,12 +174,21 @@ Have a project with existing code and want to add this structure? / Tem um proje
 
 At the root of your existing project / Na raiz do seu projeto existente:
 
+**Linux/Mac:**
 ```bash
 gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 claude
 ```
 
-The script adds `.claude/` and `CLAUDE.md` without touching your existing code. / O script adiciona `.claude/` e `CLAUDE.md` sem tocar no seu código.
+**Windows (PowerShell):**
+```powershell
+gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
+Remove-Item "$env:TEMP\cc-template" -Recurse -Force
+claude
+```
+
+The script adds `.claude/`, `CLAUDE.md` and `AGENTS.md` without touching your existing code. / O script adiciona `.claude/`, `CLAUDE.md` e `AGENTS.md` sem tocar no seu código existente.
 
 ### Step 2 — Run /project-adopt / Passo 2 — Executar /project-adopt
 
