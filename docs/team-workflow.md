@@ -14,6 +14,7 @@ Claude reads `MEMORY.md` and `specs/INDEX.md` automatically — the new member h
 
 ### Existing project not yet using the template / Projeto existente ainda sem o template
 
+**Linux/Mac:**
 ```bash
 git clone git@github.com:[owner]/[project].git
 cd [project]
@@ -21,6 +22,20 @@ cd [project]
 # Add the Claude Code structure / Adicionar a estrutura Claude Code
 gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
   && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+
+claude
+# Run / Execute: /project-adopt
+```
+
+**Windows (PowerShell):**
+```powershell
+git clone git@github.com:[owner]/[project].git
+cd [project]
+
+# Add the Claude Code structure / Adicionar a estrutura Claude Code
+gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
+Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 
 claude
 # Run / Execute: /project-adopt
@@ -36,6 +51,8 @@ Understanding what lives where prevents confusion in team environments. / Entend
 
 | What / O quê | Location / Local | Shared via git? / Via git? | Notes / Notas |
 |--------------|------------------|---------------------------|---------------|
+| Claude Code rules / Regras Claude Code | `CLAUDE.md` | Yes / Sim | Source of truth for Claude Code / Fonte primária para Claude Code |
+| Universal AI rules / Regras universais de IA | `AGENTS.md` | Yes / Sim | Mirror for Cursor, Windsurf, Copilot / Espelho para outras ferramentas |
 | Project context / Contexto do projeto | `.claude/memory/` | Yes / Sim | Commit when it changes / Commite ao mudar |
 | Feature specs / Specs de features | `.claude/specs/` | Yes / Sim | Commit with or separately from code / Com o código ou separado |
 | Skills | `.claude/skills/` | Yes / Sim | Part of the project structure / Parte da estrutura |

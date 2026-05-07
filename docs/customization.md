@@ -336,16 +336,16 @@ Reference: https://code.claude.com/docs/en/sub-agents#enable-persistent-memory
 
 ---
 
-## Customizing CLAUDE.md / Customizando o CLAUDE.md
+## Customizing CLAUDE.md and AGENTS.md / Customizando o CLAUDE.md e AGENTS.md
 
-CLAUDE.md is loaded every session — keep it lean. / CLAUDE.md é carregado em toda sessão — mantenha-o enxuto.
+CLAUDE.md is loaded every session — keep it lean. AGENTS.md is a mirror for compatibility with other AI tools. / CLAUDE.md é carregado em toda sessão — mantenha-o enxuto. AGENTS.md é um espelho para compatibilidade com outras ferramentas de IA.
 
-**What goes in CLAUDE.md / O que vai no CLAUDE.md:**
+**What goes in CLAUDE.md and AGENTS.md / O que vai no CLAUDE.md e AGENTS.md:**
 - Session protocol / Protocolo de sessão
 - Navigation map / Mapa de navegação
 - Absolute non-negotiable rules (max 5-7) / Regras inegociáveis absolutas
 
-**What does NOT go in CLAUDE.md / O que NÃO vai no CLAUDE.md:**
+**What does NOT go in CLAUDE.md or AGENTS.md / O que NÃO vai no CLAUDE.md ou AGENTS.md:**
 
 | Content / Conteúdo | Where it belongs / Onde vai |
 |--------------------|----------------------------|
@@ -356,6 +356,8 @@ CLAUDE.md is loaded every session — keep it lean. / CLAUDE.md é carregado em 
 | Task instructions / Instruções de tarefa | `.claude/skills/` |
 
 **Target / Meta:** CLAUDE.md under 50 lines. / CLAUDE.md abaixo de 50 linhas. Every extra line is paid in tokens in every session. / Cada linha extra é paga em tokens em toda sessão.
+
+**Sync / Sincronização:** if editing `CLAUDE.md`, update `AGENTS.md` with the same changes. `project-init` generates both automatically. / se editar o `CLAUDE.md`, atualize o `AGENTS.md` com as mesmas mudanças. O `project-init` gera ambos automaticamente.
 
 ---
 
@@ -379,20 +381,30 @@ Claude checks this file before web search. / Claude consulta este arquivo antes 
 
 ## Adopting the template in an existing project / Adotando o template em projeto existente
 
+**Linux/Mac:**
 ```bash
 # At the root of the existing project / Na raiz do projeto existente
 gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
   && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 ```
 
+**Windows (PowerShell):**
+```powershell
+# At the root of the existing project / Na raiz do projeto existente
+gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
+Remove-Item "$env:TEMP\cc-template" -Recurse -Force
+```
+
 Then open Claude Code and run `/project-adopt`. / Depois abra o Claude Code e execute `/project-adopt`.
 
-**What `adopt.sh` copies / O que o `adopt.sh` copia:**
+**What the script copies / O que o script copia:**
 
 | Copied / Copiado | Not copied / Não copiado |
 |------------------|--------------------------|
 | `.claude/` (entire structure / estrutura completa) | Template `README.md` |
 | `CLAUDE.md` (if doesn't exist / se não existir) | `QUICKSTART.md` |
-| `.gitignore` (if doesn't exist / se não existir) | `docs/` folder / pasta |
+| `AGENTS.md` (if doesn't exist / se não existir) | `docs/` folder / pasta |
+| `.gitignore` (if doesn't exist / se não existir) | — |
 
 `/project-adopt` is different from `/project-init` — it uses the `researcher` agent to discover the existing stack and conventions before asking any questions. / `/project-adopt` é diferente do `/project-init` — usa o agent `researcher` para descobrir a stack e convenções existentes antes de fazer qualquer pergunta.

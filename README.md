@@ -56,10 +56,20 @@ cd my-project && claude
 # Claude detecta MEMORY.md vazio e inicia /project-init automaticamente
 ```
 
-**Existing project / Projeto existente:**
+**Existing project (Linux/Mac) / Projeto existente (Linux/Mac):**
 ```bash
 cd my-existing-project
 gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+claude
+# Run / Execute: /project-adopt — Claude maps the codebase before asking anything
+```
+
+**Existing project (Windows) / Projeto existente (Windows):**
+```powershell
+cd my-existing-project
+gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
+Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 claude
 # Run / Execute: /project-adopt — Claude maps the codebase before asking anything
 ```
@@ -72,9 +82,11 @@ claude
 
 ```
 template-claude-code-open/
+├── AGENTS.md                         # Universal mirror of CLAUDE.md (Cursor, Windsurf, Copilot) / Espelho universal do CLAUDE.md
 ├── CLAUDE.md                         # Navigation map and session protocol / Mapa de navegação e protocolo
 ├── QUICKSTART.md                     # 5-minute guide / Guia em 5 minutos
-├── adopt.sh                          # Adds .claude/ to existing projects / Adiciona .claude/ a projetos existentes
+├── adopt.sh                          # Adds .claude/ to existing projects (Linux/Mac) / Adiciona .claude/ a projetos existentes
+├── adopt.ps1                         # Adds .claude/ to existing projects (Windows) / Adiciona .claude/ a projetos existentes (Windows)
 ├── docs/
 │   ├── architecture.md               # How the system works / Como o sistema funciona
 │   ├── customization.md              # How to adapt to your project / Como adaptar ao seu projeto
@@ -124,8 +136,8 @@ template-claude-code-open/
 | `/project-seal` | After project-init + first spec — seals the template in git / Após project-init + primeira spec |
 | `/project-adopt` | Existing project / Projeto existente |
 | `/spec-create` | `/spec-create [feature]` |
-| `/bugfix` | `/bugfix [description]` |
-| `/pr-review` | Before opening a PR / Antes de abrir um PR |
+| `/bugfix` | `/bugfix [description]` (with TDD: Red → Green → Refactor) |
+| `/pr-review` | Before opening a PR / Antes de abrir um PR — validates TDD cycle |
 | `/commit` | `/commit` |
 | `/deploy` | Before any deploy / Antes de qualquer deploy |
 
@@ -142,6 +154,29 @@ template-claude-code-open/
 Files in `.claude/rules/` with `paths:` frontmatter load automatically only when Claude works with matching files — saving context and keeping rules focused. / Arquivos em `.claude/rules/` com frontmatter `paths:` carregam automaticamente apenas quando Claude trabalha com arquivos correspondentes — economizando contexto.
 
 ---
+
+## TDD Red/Green/Refactor
+
+Every issue follows the mandatory cycle / Toda issue segue o ciclo obrigatório:
+
+1. **Red** — write the test **before** production code / escreva o teste **antes** do código de produção
+2. **Green** — implement minimum code to pass / implemente o mínimo para passar
+3. **Refactor** — improve without breaking tests / melhore sem quebrar os testes
+
+This applies to new features, bugfixes, and general changes. The spec template already includes the TDD checklist.
+
+## AGENTS.md — universal compatibility / compatibilidade universal
+
+The `AGENTS.md` at the root is a mirror of `CLAUDE.md` for AI tools that don't recognize the Claude Code format:
+
+| Tool / Ferramenta | Recognizes / Reconhece |
+|-------------------|----------------------|
+| Claude Code | `CLAUDE.md` |
+| Cursor | `AGENTS.md` (`.cursorrules`) |
+| Windsurf | `AGENTS.md` |
+| Copilot | `AGENTS.md` (`.github/copilot-instructions.md`) |
+
+`project-init` generates both automatically. `CLAUDE.md` is the source of truth — keep them in sync.
 
 ## Team sync / Sincronização em times
 
@@ -175,6 +210,10 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 
 ---
 
-## License
+## License / Licença
 
-MIT — see [LICENSE](LICENSE)
+**WTFPL v2** — DO WHAT THE FUCK YOU WANT TO PUBLIC LICENSE.
+You can copy, modify, distribute, use for any purpose, no restrictions.
+Você pode copiar, modificar, distribuir, usar para qualquer fim, sem restrições.
+
+→ [LICENSE](LICENSE)

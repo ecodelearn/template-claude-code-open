@@ -7,6 +7,10 @@
 #
 #   or, with the repo already cloned locally:
 #   bash /path/to/template-claude-code-open/adopt.sh
+#
+# WINDOWS:
+#   If you're on Windows, use adopt.ps1 (PowerShell native) instead.
+#   See: https://github.com/[OWNER]/template-claude-code-open
 
 set -euo pipefail
 
@@ -31,7 +35,7 @@ gh repo clone "$TEMPLATE_REPO" "$TEMP_DIR" -- --depth=1 --quiet 2>/dev/null \
   || erro "Failed to clone template. Check access to: ${TEMPLATE_REPO}"
 
 # --- Files to copy ---
-# Only copies .claude/ structure and CLAUDE.md
+# Only copies .claude/, CLAUDE.md and AGENTS.md
 # Does NOT overwrite: README.md, docs/, QUICKSTART.md
 
 if [[ -d "${TARGET_DIR}/.claude" ]]; then
@@ -50,6 +54,13 @@ else
     ok "CLAUDE.md copied"
 fi
 
+if [[ -f "${TARGET_DIR}/AGENTS.md" ]]; then
+    warn "AGENTS.md already exists — keeping existing."
+else
+    cp "${TEMP_DIR}/AGENTS.md" "${TARGET_DIR}/"
+    ok "AGENTS.md copied"
+fi
+
 # Copy .gitignore only if it doesn't exist
 if [[ ! -f "${TARGET_DIR}/.gitignore" ]]; then
     cp "${TEMP_DIR}/.gitignore" "${TARGET_DIR}/"
@@ -66,6 +77,8 @@ echo ""
 ok "Claude Code structure added to project."
 echo ""
 echo "  What was added:"
+echo "  CLAUDE.md           ← navigation map and session protocol"
+echo "  AGENTS.md           ← universal mirror for Cursor, Windsurf, Copilot"
 echo "  .claude/skills/       ← 7 skills (project-init, spec-create, bugfix, ...)"
 echo "  .claude/agents/       ← 3 agents (code-reviewer, researcher, planner)"
 echo "  .claude/rules/        ← path-scoped rules (customize for your stack)"
