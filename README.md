@@ -204,6 +204,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | Document / Documento | Content / Conteúdo |
 |----------------------|-------------------|
 | [QUICKSTART.md](QUICKSTART.md) | From zero to first code in 5 min / Do zero ao primeiro código em 5 min |
+| [pipeline-dev-software.md](pipeline-dev-software.md) | Full cycle dev pipeline (requirements → monitoring) / Pipeline completo de desenvolvimento |
 | [docs/architecture.md](docs/architecture.md) | How the system works / Como o sistema funciona internamente |
 | [docs/customization.md](docs/customization.md) | How to adapt skills, agents, rules and hooks |
 | [docs/team-workflow.md](docs/team-workflow.md) | Workflow for remote teams / Workflow para times remotos |

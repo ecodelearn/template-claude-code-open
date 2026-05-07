@@ -11,6 +11,7 @@ Invoke directly with `/skill-name` or let Claude invoke automatically when relev
 | `/bugfix` | `bugfix/` | Bug report — systematic triage until verified fix |
 | `/pr-review` | `pr-review/` | Before opening or reviewing a PR |
 | `/commit` | `commit/` | Format and validate commit message |
+| `/publish-pattern` | `publish-pattern/` | Publish reusable patterns to global-index |
 | `/deploy` | `deploy/` | Before any deploy |
 
 ## Structure
