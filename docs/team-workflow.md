@@ -1,5 +1,7 @@
 # Team workflow / Fluxo em times
 
+> "Let the programmers be many and the managers few — then all will be productive." — Tao of Programming, 6.1
+
 ## Setup for a new team member / Configuração para um novo membro
 
 ### Project already using this template (MEMORY.md filled) / Projeto já usando o template (MEMORY.md preenchido)

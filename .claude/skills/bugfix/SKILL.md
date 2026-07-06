@@ -39,6 +39,8 @@ Fix the **root cause**, not the symptom.
 - Don't refactor adjacent code together with the fix — separate scope, separate commit
 - If you find other bugs along the way: record as issue/TODO, don't fix now
 
+> "Does a good programmer refuse to maintain his code?" — Tao of Programming, 5.4
+
 ### 5. Guard (regression coverage)
 Add the smallest test that would have failed before the fix and passes now.
 - Unit tests for pure logic

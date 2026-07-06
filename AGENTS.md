@@ -32,6 +32,8 @@
 | Specialized agents | `.claude/agents/README.md` |
 | Official docs before web search | `.claude/references.md` |
 
+> "The program should always respond to the user in the way that astonishes him least." — Law of Least Astonishment, Tao of Programming, 4.1
+
 ## Non-negotiable principles / Princípios inegociáveis
 
 - Always prefer the simplest solution that solves the problem

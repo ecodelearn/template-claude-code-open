@@ -7,6 +7,8 @@ argument-hint: "[feature-name]"
 
 # Skill: spec-create
 
+> "When the program is being tested, it is too late to make design changes." — Tao of Programming, 3.1
+
 **When to use:** When starting a new feature, phase, or sprint. Can be invoked directly or after the `planner` agent generates an approved PRD.
 
 ---
@@ -19,6 +21,7 @@ Collect the minimum information before creating:
 
 1. "What is the name and objective of this feature?" (1 clear sentence)
 2. "What is out of scope?"
+   > The novice delivered a screen editor, graphics, and an AI interface — but forgot the financial part of the package they were asked for. — Tao of Programming, 5.3 (paraphrased)
 3. "Does it depend on any other spec to start?"
 4. "What is the priority? (high / medium / low)"
 
