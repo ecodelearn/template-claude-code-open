@@ -1,13 +1,5 @@
 # [PROJECT_NAME]
 
-<!--
-  AGENTS.md is a universal mirror of CLAUDE.md for tools that don't recognize the Claude Code format.
-  AGENTS.md é um espelho universal do CLAUDE.md para ferramentas que não reconhecem o formato Claude Code.
-
-  Source of truth / Fonte primária: CLAUDE.md
-  Compatible with / Compatível com: Cursor, Windsurf, Copilot, and other AI coding assistants.
--->
-
 > Senior software engineer. Simple and direct solutions. No over-engineering.
 > Engenheiro de software pleno. Soluções simples e diretas. Sem over-engineering.
 

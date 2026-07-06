@@ -1,87 +1,85 @@
 # Spec: [FEATURE_SLUG]
 
-<!--
-  HOW TO USE THIS TEMPLATE / COMO USAR ESTE TEMPLATE:
-  1. Copy to .claude/specs/[feature-slug].md
-  2. Fill in the fields and remove comments
-  3. Add to INDEX.md with status "backlog"
-
-  Or use the skill spec-create to do this automatically.
-  Ou use a skill spec-create para fazer isso automaticamente.
--->
-
 **Status:** `backlog` | `in-progress` | `review` | `done` | `blocked`
 **Slug:** `[project-slug]::[feature-slug]`
-**Sprint:** [number or name / número ou nome]
-**Created / Criado em:** YYYY-MM-DD
-**Last updated / Última atualização:** YYYY-MM-DD
+**Sprint:** [Sprint Name/Number]
+**Created:** YYYY-MM-DD
+**Last updated:** YYYY-MM-DD
 
 ---
 
 ## Objective / Objetivo
 
-<!-- What does this feature deliver? One clear sentence of the value generated. -->
-<!-- O que esta feature entrega? Uma frase clara do valor gerado. -->
-<!-- Example: JWT authentication with refresh token for B2B users. -->
+- [Clear, single-sentence value statement]
 
-## Technical context / Contexto técnico
+## Technical Context / Contexto Técnico
 
-<!-- Why are we doing this? What concrete problem does it solve? -->
-<!-- Por que estamos fazendo isso? Qual problema concreto resolve? -->
+- [Core problem statement, stack context, and architectural impact]
 
-## Out of scope / Fora do escopo
+## Mermaid Data Flow / Arquitetura (Mermaid Flowchart)
 
-<!-- What is explicitly NOT part of this spec. -->
-<!-- O que explicitamente NÃO será feito nesta spec. -->
+```mermaid
+graph TD
+  A[Client] -->|Request| B[Controller]
+  B -->|Action| C[Service]
+  C -->|Query| D[(Database)]
+```
 
-## Technical decisions / Decisões técnicas
+## Out of Scope / Fora do Escopo
 
-<!-- Format: - [Decision] — [Discarded alternatives] — [Why this one] -->
-<!-- Formato: - [Decisão] — [Alternativas descartadas] — [Por quê esta] -->
+- [Explicit exclusions to prevent scope creep]
+
+## Technical Decisions / Decisões Técnicas
+
+- [Decision] — [Discarded alternatives] — [Why this one]
 
 ## Dependencies / Dependências
 
 - **Depends on / Depende de:** [spec-slug or "none"]
 - **Blocks / Bloqueia:** [spec-slug or "nothing"]
 
-## Relevant files / Arquivos relevantes
+## Relevant Files / Arquivos Relevantes
 
-<!-- List main files to be created or modified -->
-<!-- Liste os arquivos principais que serão criados ou modificados -->
+- [ ] `file:///path/to/file`
 
-## Acceptance criteria / Critérios de aceite
+## Acceptance Criteria / Critérios de Aceite
 
-<!-- What must be true when this spec is done? Be specific and verifiable. -->
-<!-- O que deve ser verdade quando esta spec estiver done? Seja específico e verificável. -->
+- [ ] [Verifiable condition 1]
+- [ ] [Verifiable condition 2]
+
+---
+
+## TDD Implementation Checklist / Ciclo TDD
+
+- [ ] **Red:** Write automated test for [Requirement] and verify it fails.
+- [ ] **Green:** Implement minimum code to make test pass.
+- [ ] **Refactor:** Clean and optimize implementation without breaking tests.
 
 ## Tasks / Tarefas
 
-<!-- Implementation checklist. Mark [x] when done. -->
 - [ ] [Task 1 / Tarefa 1]
 - [ ] [Task 2 / Tarefa 2]
-- [ ] Tests written and passing / Testes escritos e passando
-- [ ] PR created and approved / PR criado e aprovado
 
 ---
 
-## How to resume / Como retomar este trabalho
+## Verification Plan / Plano de Verificação
 
-> CRITICAL: Fill whenever pausing. This is what allows any dev or session to continue without briefing.
-> CRÍTICO: Preencha sempre que pausar. É o que permite qualquer dev ou sessão continuar sem briefing.
+### Automated Tests / Testes Automatizados
+- [Command to run tests, e.g. `npm test`]
 
-**Current state / Estado atual:** [what has already been implemented]
-**Next step / Próximo passo:** [exactly what to do when resuming — be specific, with file and line if possible]
-**Blockers / Bloqueadores:** [what blocks progress, if any — or "none"]
+### Manual Verification / Verificação Manual
+- [Step-by-step verification steps]
 
 ---
 
-## Verification / Verificação
+## How to Resume / Como Retomar este Trabalho
 
-<!-- Fill when done. Answers: how do we know it works? -->
-<!-- Preencha ao concluir. Responde: como sabemos que funciona? -->
+**Current State / Estado Atual:** [brief summary of completed tasks]
+**Next Step / Próximo Passo:** [exact next action to execute when resuming]
+**Blockers / Bloqueadores:** [none / list blockers]
 
-## Implementation notes / Notas de implementação
+---
 
-<!-- Context accumulated during implementation. -->
-<!-- Minor decisions, gotchas, useful references, links. -->
-<!-- Updated continuously as work progresses. -->
+## Implementation Notes / Notas de Implementação
+
+- [Gotchas, minor decisions, references accumulated during coding]
