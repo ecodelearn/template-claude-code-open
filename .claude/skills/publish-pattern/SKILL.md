@@ -74,7 +74,7 @@ Read `.claude/memory/MEMORY.md` to confirm `project`.
 
 ### Step 3 — Edit the index
 
-Open `~/.claude/patterns-repo/global-index.md` (or whatever index file the user's repo actually uses — check its README if `global-index.md` doesn't exist).
+Open `~/.claude/patterns-repo/global-index.md` (or whatever index file the user's repo actually uses — check its README if `global-index.md` doesn't exist). Note the real path of the file you edit — it's what goes into the commit in the next step.
 
 Add the entry under the matching category section. Create the category (`### [Category]`) if it doesn't exist yet.
 
@@ -82,10 +82,12 @@ Update the "last updated" date at the top of the file.
 
 ### Step 4 — Commit and push
 
+Use the real index file path from Step 3 (don't assume `global-index.md` if the user's repo uses a different name):
+
 ```bash
 cd ~/.claude/patterns-repo
-git add global-index.md
-git commit -m "docs(global-index): add [name] from [project-slug]"
+git add <real-index-file>
+git commit -m "docs(patterns): add [name] from [project-slug]"
 git push origin main
 ```
 
