@@ -68,6 +68,10 @@ Save the choice as `language: en` or `language: pt-br` in the MEMORY.md front ma
 
 "Does the project already have code or is it starting from scratch? If it already exists, briefly describe the current state."
 
+### 8 — Cross-project patterns (optional)
+
+"Do you want to maintain a personal GitHub repo that accumulates reusable patterns across all your projects? If yes, give me `owner/repo`. If no, just press enter — patterns will stay local to this project's `.claude/memory/patterns.md`."
+
 ---
 
 ## Actions after the interview
@@ -76,6 +80,7 @@ Execute in order:
 
 1. **Fill `.claude/memory/MEMORY.md`**
    - Insert slug, repo, stack and **language** in the YAML front matter
+   - Insert `patterns_repo` if the user gave one in question 8; otherwise leave it blank — never invent or default it
    - Fill all sections with the collected answers
    - Write the content in the chosen language
 

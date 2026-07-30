@@ -62,7 +62,8 @@ A few questions I need from you:
    (e.g.: never alter existing migrations, PR required)
 3. Is the project solo, pair, or team? Communication language?
 4. MCP integrations needed? (GitHub, database, Sentry, others)
-5. Are there features in progress that I should create specs for now?"
+5. Are there features in progress that I should create specs for now?
+6. (Optional) Do you maintain a personal GitHub repo for cross-project patterns? If yes, give me `owner/repo` — otherwise skip, patterns stay local to this project."
 ```
 
 ### Phase 3 — Actions after validation
@@ -72,6 +73,7 @@ Execute in order:
 1. **Fill `.claude/memory/MEMORY.md`**
    - Use the stack and conventions *discovered* from the codebase (not the answered ones)
    - Include what is currently being worked on as "Current state"
+   - Insert `patterns_repo` only if the user gave one in question 6 — if the project already had a `MEMORY.md` without this field, leave it blank, don't prompt again or assume a value
 
 2. **Update `CLAUDE.md`**
    - Replace `[PROJECT_NAME]` with the real name

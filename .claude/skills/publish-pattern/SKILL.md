@@ -1,125 +1,119 @@
 ---
 name: publish-pattern
-description: Publica padrões reutilizáveis no global-index do claude-memories. Use quando uma solução se provar genuinamente reutilizável em outros projetos.
+description: Publishes a reusable pattern to the user's personal cross-project pattern repo, if one is configured. Use when a solution proves genuinely reusable across other projects.
 disable-model-invocation: true
 ---
 
 # Skill: publish-pattern
 
-**Quando usar:** Quando uma solução se provar genuinamente reutilizável em outros projetos. Use com critério — só o que realmente economizaria tempo ou evitaria erros em um contexto diferente.
+**When to use:** When a solution proves genuinely reusable across other projects. Use judgment — only what would actually save time or prevent errors in a different context.
+
+**Requires configuration:** this skill only does anything with GitHub if `patterns_repo` is filled in `.claude/memory/MEMORY.md`'s front matter (optional, set during `project-init` or `project-adopt`). If it's blank, skip straight to "Local-only fallback" below — never clone, create, or push to a repo the user hasn't named.
 
 ---
 
-## Critérios para publicar
+## Criteria to publish
 
-Publique se a solução:
-- Resolveu um problema não óbvio
-- É independente do contexto específico deste projeto
-- Economizaria tempo ou evitaria erros em outro projeto
+Publish if the solution:
+- Solved a non-obvious problem
+- Is independent of this project's specific business context
+- Would save time or prevent errors in another project
 
-Não publique:
-- Soluções muito específicas do domínio do negócio
-- Workarounds temporários
-- O que já está no global-index
+Don't publish:
+- Solutions too specific to this project's business domain
+- Temporary workarounds
+- Something already in the pattern index
 
 ---
 
-## Formato da entrada
+## Entry format
 
 ```markdown
-### [Nome do Padrão] — [data]
-**Origem:** `[project-slug]`
-**Problema:** [o que resolvia — 1 frase]
-**Solução:** [a abordagem — 2-3 frases]
-**Por que funciona:** [raciocínio curto]
-**Reutilizável quando:** [condições ou contexto]
-**Detalhes:** [link para o arquivo no repo de origem]
+### [Pattern name] — [date]
+**Origin:** `[project-slug]`
+**Problem:** [what it solved — 1 sentence]
+**Solution:** [the approach — 2-3 sentences]
+**Why it works:** [short reasoning]
+**Reusable when:** [conditions or context]
+**Details:** [link to the file in the source repo]
 ```
 
 ---
 
-## Configuração
+## Local-only fallback (`patterns_repo` blank)
 
-```
-claude-memories path:   ~/.claude/claude-memories/
-claude-memories remote: https://github.com/ecodelearn/claude-memories
-global-index file:      ~/.claude/claude-memories/global-index.md
-```
+Add the entry above to this project's `.claude/memory/patterns.md` (create it if missing) and tell the user: "No `patterns_repo` configured — recorded locally in `patterns.md` only." Stop here.
 
 ---
 
-## Protocolo de execução
+## Execution protocol (`patterns_repo` configured)
 
-### Passo 0 — Verificar e preparar o repositório claude-memories
+### Step 0 — Read the configured repo
 
-Antes de qualquer edição, verificar se `~/.claude/claude-memories/` existe e é um repo git.
+Read `patterns_repo` from `.claude/memory/MEMORY.md`'s front matter (format `owner/repo`).
 
-**Se o diretório não existir ou não for um repo git:**
+### Step 1 — Sync the local clone
+
+Local clone path: `~/.claude/patterns-repo/`
+
+**If it doesn't exist yet:**
 ```bash
-# Clonar o repositório
-git clone https://github.com/ecodelearn/claude-memories ~/.claude/claude-memories/
+git clone https://github.com/<patterns_repo> ~/.claude/patterns-repo/
 ```
 
-**Se o diretório existir mas não for git (pasta avulsa):**
+**If it already exists:**
 ```bash
-cd ~/.claude/claude-memories
-git init
-git remote add origin https://github.com/ecodelearn/claude-memories
-git fetch origin
-git checkout -b main origin/main
+cd ~/.claude/patterns-repo && git pull origin main
 ```
 
-**Se já for um repo git** (caso normal), apenas sincronizar:
-```bash
-cd ~/.claude/claude-memories && git pull origin main
-```
+Don't try to recover a non-git directory at that path — if `git pull` fails because it isn't a repo, tell the user and stop; that's their local state to fix, not this skill's job.
 
-### Passo 1 — Ler o contexto do projeto atual
+### Step 2 — Read the current project's slug
 
-Leia `.claude/memory/MEMORY.md` para confirmar o `project-slug`.
+Read `.claude/memory/MEMORY.md` to confirm `project`.
 
-### Passo 2 — Editar global-index.md
+### Step 3 — Edit the index
 
-Abra `~/.claude/claude-memories/global-index.md`.
+Open `~/.claude/patterns-repo/global-index.md` (or whatever index file the user's repo actually uses — check its README if `global-index.md` doesn't exist).
 
-Adicione a entrada na seção de categoria correspondente. Se a categoria não existir, crie com `### [Categoria]`.
+Add the entry under the matching category section. Create the category (`### [Category]`) if it doesn't exist yet.
 
-Atualize a data de "Última atualização" no topo do arquivo.
+Update the "last updated" date at the top of the file.
 
-### Passo 3 — Commit e push
+### Step 4 — Commit and push
 
 ```bash
-cd ~/.claude/claude-memories
+cd ~/.claude/patterns-repo
 git add global-index.md
-git commit -m "docs(global-index): add [nome] from [project-slug]"
+git commit -m "docs(global-index): add [name] from [project-slug]"
 git push origin main
 ```
 
-### Passo 4 — Registrar no projeto atual
+### Step 5 — Record locally too
 
-Adicione também uma nota em `.claude/memory/patterns.md` do projeto atual (ou crie o arquivo se não existir), com referência ao padrão publicado.
+Also add a note to this project's `.claude/memory/patterns.md`, referencing the published entry.
 
 ---
 
-## Exemplo de entrada publicada
+## Example published entry
 
 ```markdown
-### Cursor Pagination em tabelas grandes — 2026-03-04
-**Origem:** `minha-api`
-**Problema:** Offset pagination causava degradação de performance com >50k registros
-**Solução:** Cursor baseado em `(created_at, id)` com índice composto — evita full scan
-**Por que funciona:** O banco filtra a partir de um ponto fixo em vez de pular N linhas
-**Reutilizável quando:** Qualquer endpoint com paginação em tabela de alto volume
-**Detalhes:** ecodelearn/minha-api → .claude/memory/lessons.md#cursor-pagination
+### Cursor pagination on large tables — 2026-03-04
+**Origin:** `my-api`
+**Problem:** Offset pagination degraded past 50k rows
+**Solution:** Cursor based on `(created_at, id)` with a composite index — avoids full scan
+**Why it works:** The database filters from a fixed point instead of skipping N rows
+**Reusable when:** Any endpoint paginating a high-volume table
+**Details:** `<owner>/my-api` → `.claude/memory/lessons.md#cursor-pagination`
 ```
 
 ---
 
-## Erros comuns
+## Common errors
 
-| Erro | Causa | Fix |
-|------|-------|-----|
-| `not a git repository` | Pasta existe mas não foi inicializada com git | Executar Passo 0 — branch git init |
-| `Permission denied` | SSH não configurado para GitHub | Usar HTTPS (já configurado acima) |
-| `rejected — non-fast-forward` | Repo remoto tem commits não puxados | `git pull --rebase origin main` antes do push |
-| `global-index.md not found` | Repo clonado mas arquivo não existe | Criar o arquivo com o template básico |
+| Error | Cause | Fix |
+|-------|-------|-----|
+| `not a git repository` | `~/.claude/patterns-repo/` exists but isn't a git clone | Tell the user; don't auto-`git init` a path you don't own the history of |
+| `Permission denied` | No GitHub auth configured for that repo | Ask the user to check their `gh`/git credentials — not this skill's problem to solve |
+| `rejected — non-fast-forward` | Remote has commits not yet pulled | `git pull --rebase origin main` before pushing |
+| index file not found | Repo cloned but no `global-index.md` | Ask the user what file/format their repo actually uses before inventing one |

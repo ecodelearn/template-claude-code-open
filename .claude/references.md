@@ -4,6 +4,12 @@
 > Always prefer official sources for best practices, code patterns and APIs.
 > The "This Project" section is filled by project-init or manually as the project evolves.
 
+## No reliable source found
+
+High-risk claims — library/package version numbers, CLI flags, API signatures, config keys, env var names, exact dates, named papers/authors — must trace to a source in this file, official docs, or the codebase itself.
+
+If none exists: say so explicitly instead of guessing. Don't state an unverified version, flag, or API shape with the same confidence as a verified one — mark it as unconfirmed and point to where the user can check.
+
 ---
 
 ## Claude Code

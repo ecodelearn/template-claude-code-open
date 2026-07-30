@@ -3,6 +3,7 @@ project: [PROJECT_SLUG]
 repo: [OWNER/REPO]
 stack: [to be filled by project-init]
 language: [en/pt-br — set by project-init]
+patterns_repo: [optional — owner/repo for a personal cross-project pattern index; leave blank to keep patterns local to this project]
 ---
 
 # [PROJECT_NAME] — Project Memory / Memória do Projeto

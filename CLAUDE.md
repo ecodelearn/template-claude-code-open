@@ -42,6 +42,7 @@
 - Update specs and `INDEX.md` when pausing any work
 - Code belongs to the team — any session must be able to continue another's work
 - Before web search, check `.claude/references.md` — official sources take priority
+- **No source, no claim:** if a version, flag, API shape, date or stat can't be traced to `references.md`, official docs or the code itself, say so instead of guessing — an unverified detail stated with false confidence is worse than an admitted gap
 - **TDD Red/Green/Refactor:** write test before production code (Red), implement minimum to pass (Green), refactor without breaking (Refactor) — mandatory for every issue, bugfix and feature
 - **Stop-the-line:** when facing unexpected failure, stop, preserve evidence, re-plan — don't stack code on top of an error
 - **Definition of Done:** validated behavior + passing tests + TDD cycle verified + verification documented in spec — "looks right" is not done
