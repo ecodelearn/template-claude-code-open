@@ -211,4 +211,5 @@ The script adds `.claude/`, `CLAUDE.md` and `AGENTS.md` without touching your ex
 
 - Read / Leia [docs/architecture.md](docs/architecture.md) — how the system works / como o sistema funciona
 - Read / Leia [docs/customization.md](docs/customization.md) — adapt skills, agents, rules and hooks / adaptar skills, agents, regras e hooks
+- Prefer a Node.js/npx installer with `--dry-run` and rollback, or use Codex/Gemini? See [template-claude-code-ts](https://github.com/ecodelearn/template-claude-code-ts) / Prefere um instalador Node.js/npx com `--dry-run` e rollback, ou usa Codex/Gemini? Veja o [template-claude-code-ts](https://github.com/ecodelearn/template-claude-code-ts)
 - Read / Leia [docs/team-workflow.md](docs/team-workflow.md) — if using in a team / se usar em time

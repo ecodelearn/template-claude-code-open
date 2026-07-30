@@ -76,6 +76,9 @@ claude
 
 → **[Full guide / Guia completo: QUICKSTART.md](QUICKSTART.md)**
 
+**Prefer an installer with dry-run/rollback, or use Codex/Gemini? / Prefere um instalador com dry-run/rollback, ou usa Codex/Gemini?**
+[template-claude-code-ts](https://github.com/ecodelearn/template-claude-code-ts) is a Node.js/npx CLI that installs this same canonical content — pinned to an audited commit of this repo — with provider-specific adapters (Claude, Codex, Gemini), `--dry-run` preview, and transactional rollback. This repo (`-open`) needs no Node.js and works with any AGENTS.md-reading tool via a plain shell/PowerShell script; `-ts` trades that zero-dependency simplicity for safety rails and multi-agent adapters. / `template-claude-code-ts` é um CLI Node.js/npx que instala este mesmo conteúdo canônico — fixado num commit auditado deste repositório — com adaptadores por provider (Claude, Codex, Gemini), prévia `--dry-run` e rollback transacional. Este repositório (`-open`) não precisa de Node.js e funciona com qualquer ferramenta que leia AGENTS.md via um script shell/PowerShell simples; o `-ts` troca essa simplicidade sem dependências por travas de segurança e adaptadores multi-agente.
+
 ---
 
 ## Structure / Estrutura
@@ -208,6 +211,7 @@ cp .claude/settings.local.json.example .claude/settings.local.json
 | [docs/architecture.md](docs/architecture.md) | How the system works / Como o sistema funciona internamente |
 | [docs/customization.md](docs/customization.md) | How to adapt skills, agents, rules and hooks |
 | [docs/team-workflow.md](docs/team-workflow.md) | Workflow for remote teams / Workflow para times remotos |
+| [template-claude-code-ts ↗](https://github.com/ecodelearn/template-claude-code-ts) | npx/Node.js installer alternative — dry-run, rollback, Codex/Gemini adapters / Alternativa via npx/Node.js — dry-run, rollback, adaptadores Codex/Gemini |
 
 ---
 

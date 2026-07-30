@@ -299,3 +299,7 @@ Loaded on demand / Carregado sob demanda:
 ```
 
 The minimal `CLAUDE.md` and path-scoped `rules/` keep the constant token cost low across the entire life of the project. / O `CLAUDE.md` mínimo e as `rules/` por caminho mantêm o custo constante de tokens baixo ao longo de toda a vida do projeto.
+
+## Related project / Projeto relacionado
+
+[template-claude-code-ts](https://github.com/ecodelearn/template-claude-code-ts) is a separate Node.js/npx CLI that installs this same content, pinned to an audited commit of this repo, with `--dry-run`, transactional rollback, and provider-specific adapters for Codex and Gemini in addition to Claude Code. This repo stays the canonical, dependency-free source; `-ts` is a convenience layer on top of it, not a fork. / `template-claude-code-ts` é um CLI Node.js/npx separado que instala este mesmo conteúdo, fixado num commit auditado deste repositório, com `--dry-run`, rollback transacional e adaptadores por provider para Codex e Gemini além do Claude Code. Este repositório continua sendo a fonte canônica sem dependências; o `-ts` é uma camada de conveniência em cima dele, não um fork.
