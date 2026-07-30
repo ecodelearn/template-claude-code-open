@@ -50,7 +50,7 @@ Another dev (or another session) picks up the work
 
 **New project / Projeto novo:**
 ```bash
-gh repo create my-project --template [OWNER]/template-claude-code-open --clone
+gh repo create my-project --template ecodelearn/template-claude-code-open --clone
 cd my-project && claude
 # Claude detects empty MEMORY.md and starts /project-init automatically
 # Claude detecta MEMORY.md vazio e inicia /project-init automaticamente
@@ -59,7 +59,7 @@ cd my-project && claude
 **Existing project (Linux/Mac) / Projeto existente (Linux/Mac):**
 ```bash
 cd my-existing-project
-gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 claude
 # Run / Execute: /project-adopt — Claude maps the codebase before asking anything
 ```
@@ -67,7 +67,7 @@ claude
 **Existing project (Windows) / Projeto existente (Windows):**
 ```powershell
 cd my-existing-project
-gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
 powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
 Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 claude

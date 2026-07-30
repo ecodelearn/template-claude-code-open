@@ -2,7 +2,7 @@
 # adopt.sh — adds Claude Code structure to an existing project
 #
 # USAGE:
-#   gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
+#   gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
 #     && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 #
 #   or, with the repo already cloned locally:
@@ -10,11 +10,11 @@
 #
 # WINDOWS:
 #   If you're on Windows, use adopt.ps1 (PowerShell native) instead.
-#   See: https://github.com/[OWNER]/template-claude-code-open
+#   See: https://github.com/ecodelearn/template-claude-code-open
 
 set -euo pipefail
 
-TEMPLATE_REPO="[OWNER]/template-claude-code-open"
+TEMPLATE_REPO="ecodelearn/template-claude-code-open"
 TEMP_DIR=$(mktemp -d)
 TARGET_DIR="${PWD}"
 

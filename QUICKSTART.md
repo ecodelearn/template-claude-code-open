@@ -16,13 +16,13 @@
 ## Step 1 — Create the project from the template / Passo 1 — Criar o projeto a partir do template
 
 ```bash
-gh repo create my-project --template [OWNER]/template-claude-code-open --clone
+gh repo create my-project --template ecodelearn/template-claude-code-open --clone
 cd my-project
 ```
 
 > Manual clone / Clonar manualmente:
 > ```bash
-> git clone https://github.com/[OWNER]/template-claude-code-open.git my-project
+> git clone https://github.com/ecodelearn/template-claude-code-open.git my-project
 > cd my-project
 > rm -rf .git && git init
 > gh repo create my-project --source=. --push
@@ -176,13 +176,13 @@ At the root of your existing project / Na raiz do seu projeto existente:
 
 **Linux/Mac:**
 ```bash
-gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 claude
 ```
 
 **Windows (PowerShell):**
 ```powershell
-gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
 powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
 Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 claude

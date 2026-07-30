@@ -384,14 +384,14 @@ Claude checks this file before web search. / Claude consulta este arquivo antes 
 **Linux/Mac:**
 ```bash
 # At the root of the existing project / Na raiz do projeto existente
-gh repo clone [OWNER]/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
+gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet \
   && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 ```
 
 **Windows (PowerShell):**
 ```powershell
 # At the root of the existing project / Na raiz do projeto existente
-gh repo clone [OWNER]/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
 powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
 Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 ```

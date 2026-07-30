@@ -41,17 +41,17 @@ The template structure is already created locally. We need to publish it publicl
 
 ## Acceptance criteria / Critérios de aceite
 
-- [ ] Repository is public on GitHub
-- [ ] Repo is marked as "Template repository" in GitHub Settings
-- [ ] `adopt.sh` references the correct public repo URL
-- [ ] MIT LICENSE file exists in root
-- [ ] `gh repo create meu-projeto --template [OWNER]/template-claude-code-open --clone` works end to end
-- [ ] README renders correctly on GitHub
+- [x] Repository is public on GitHub — confirmed 2026-07-30 (`gh repo view` → `PUBLIC`)
+- [ ] Repo is marked as "Template repository" in GitHub Settings — not re-verified this session
+- [x] `adopt.sh` references the correct public repo URL — fixed 2026-07-30, was still `[OWNER]` (never filled in), replaced with `ecodelearn` and tested end-to-end against a scratch repo
+- [x] MIT LICENSE file exists in root — confirmed 2026-07-30
+- [ ] `gh repo create meu-projeto --template ecodelearn/template-claude-code-open --clone` works end to end — not re-tested this session (the `adopt.sh` fix was tested via direct invocation, not via the template-repo flag)
+- [ ] README renders correctly on GitHub — not re-verified this session
 
 ## Tasks / Tarefas
 
-- [ ] Update `adopt.sh` with final public repo reference (`[OWNER]/template-claude-code-open`)
-- [ ] Create `LICENSE` file (MIT)
+- [x] Update `adopt.sh` with final public repo reference (`ecodelearn/template-claude-code-open`) — done 2026-07-30; same `[OWNER]` placeholder was also still present in `README.md`, `QUICKSTART.md`, `docs/team-workflow.md`, `docs/customization.md` and fixed there too
+- [x] Create `LICENSE` file (MIT) — already existed
 - [ ] Final review: grep for any remaining private repo references (`ecodelearn/template-claude-code` that aren't the open version)
 - [ ] Create GitHub repo: `gh repo create template-claude-code-open --public --description "..."`
 - [ ] Push: `git add -A && git commit -m "feat: initial open-source template" && git push -u origin main`
