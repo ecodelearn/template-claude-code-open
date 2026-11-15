@@ -1,0 +1,30 @@
+name: Feature request / Solicitação de recurso
+description: Propose an improvement / Proponha uma melhoria
+title: "[Feature] "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem / Problema
+      description: What user need is not covered? / Qual necessidade não está coberta?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal / Proposta
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives / Alternativas
+  - type: checkboxes
+    id: scope
+    attributes:
+      label: Scope / Escopo
+      options:
+        - label: This keeps the template universal (no personal repos, paths or machines).
+          required: true
