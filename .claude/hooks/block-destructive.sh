@@ -40,4 +40,19 @@ for pattern in "${BLOCKED[@]}"; do
     fi
 done
 
+# Secret-file reads through the shell (permissions.deny only covers the Read tool)
+SECRET_RE='(cat|less|more|head|tail|grep|rg|sed|awk|cp|mv|base64|xxd|strings|source|\.)[[:space:]]+[^|;&]*(\.env([^a-zA-Z0-9_-]|$)|\.env\.[a-zA-Z0-9_.-]+|\.pem([^a-zA-Z0-9_]|$)|id_rsa|id_ed25519)'
+if echo "$COMMAND" | grep -Eq "$SECRET_RE" && ! echo "$COMMAND" | grep -Eq '\.env\.(example|sample|template)'; then
+    jq -n \
+        --arg reason "Reading a secret file (.env, key, pem) through the shell is blocked. Ask the user to provide the needed value." \
+        '{
+            hookSpecificOutput: {
+                hookEventName: "PreToolUse",
+                permissionDecision: "deny",
+                permissionDecisionReason: $reason
+            }
+        }'
+    exit 0
+fi
+
 exit 0
