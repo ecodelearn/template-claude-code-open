@@ -176,13 +176,13 @@ At the root of your existing project / Na raiz do seu projeto existente:
 
 **Linux/Mac:**
 ```bash
-gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --branch v1.0.0 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 claude
 ```
 
 **Windows (PowerShell):**
 ```powershell
-gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --branch v1.0.0 --quiet
 powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
 Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 claude

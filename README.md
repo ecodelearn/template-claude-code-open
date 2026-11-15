@@ -59,7 +59,7 @@ cd my-project && claude
 **Existing project (Linux/Mac) / Projeto existente (Linux/Mac):**
 ```bash
 cd my-existing-project
-gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
+gh repo clone ecodelearn/template-claude-code-open /tmp/cc-template -- --depth=1 --branch v1.0.0 --quiet && bash /tmp/cc-template/adopt.sh; rm -rf /tmp/cc-template
 claude
 # Run / Execute: /project-adopt — Claude maps the codebase before asking anything
 ```
@@ -67,7 +67,7 @@ claude
 **Existing project (Windows) / Projeto existente (Windows):**
 ```powershell
 cd my-existing-project
-gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --branch v1.0.0 --quiet
 powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
 Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 claude

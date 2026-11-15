@@ -8,7 +8,7 @@
   Deve ser executado na raiz do projeto destino.
 
 .EXAMPLE
-  gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --quiet
+  gh repo clone ecodelearn/template-claude-code-open $env:TEMP\cc-template -- --depth=1 --branch v1.0.0 --quiet
   powershell -ExecutionPolicy Bypass -File "$env:TEMP\cc-template\adopt.ps1"
   Remove-Item "$env:TEMP\cc-template" -Recurse -Force
 #>
