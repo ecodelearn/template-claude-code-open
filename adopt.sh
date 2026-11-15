@@ -40,12 +40,29 @@ gh repo clone "$TEMPLATE_REPO" "$TEMP_DIR" -- --depth=1 --quiet 2>/dev/null \
 
 if [[ -d "${TARGET_DIR}/.claude" ]]; then
     warn ".claude/ already exists in this project."
-    read -rp "Overwrite? Existing files will be lost. [y/N] " resposta
-    [[ "${resposta,,}" != "y" ]] && { info "Operation cancelled."; rm -rf "$TEMP_DIR"; exit 0; }
+    info "Default: add only the files that are missing; existing files are kept."
+    read -rp "Overwrite existing files instead? A backup is saved first. [y/N] " resposta
+    if [[ "${resposta,,}" == "y" ]]; then
+        BACKUP="${TARGET_DIR}/.claude.bak-$(date +%Y%m%d-%H%M%S)"
+        cp -a "${TARGET_DIR}/.claude" "$BACKUP"
+        ok "Backup saved: ${BACKUP}"
+        cp -r "${TEMP_DIR}/.claude" "${TARGET_DIR}/"
+        ok ".claude/ overwritten"
+    else
+        # -n: never overwrite existing files
+        cp -rn "${TEMP_DIR}/.claude/." "${TARGET_DIR}/.claude/" || true   # newer coreutils exit 1 when skipping
+        ok ".claude/ merged (existing files kept)"
+        if ! cmp -s "${TEMP_DIR}/.claude/settings.json" "${TARGET_DIR}/.claude/settings.json"; then
+            cp "${TEMP_DIR}/.claude/settings.json" "${TARGET_DIR}/.claude/settings.template.json"
+            warn "Your .claude/settings.json differs from the template's."
+            warn "Merge 'permissions.deny' and 'hooks' from .claude/settings.template.json by hand,"
+            warn "then delete that file."
+        fi
+    fi
+else
+    cp -r "${TEMP_DIR}/.claude" "${TARGET_DIR}/"
+    ok ".claude/ copied"
 fi
-
-cp -r "${TEMP_DIR}/.claude" "${TARGET_DIR}/"
-ok ".claude/ copied"
 
 if [[ -f "${TARGET_DIR}/CLAUDE.md" ]]; then
     warn "CLAUDE.md already exists — keeping existing."

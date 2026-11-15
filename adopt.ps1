@@ -23,11 +23,32 @@ Write-Host ""
 # .claude/
 $targetClaude = Join-Path (Get-Location) ".claude"
 if (Test-Path $targetClaude) {
-    $confirm = Read-Host ".claude/ already exists. Overwrite? (y/N)"
-    if ($confirm -ne "y") { Write-Host "Skipping .claude/" -ForegroundColor Yellow }
-    else {
-        Copy-Item -Path (Join-Path $ScriptDir ".claude") -Destination (Get-Location) -Recurse -Force
+    Write-Host ".claude/ already exists. Default: add only missing files; existing files are kept." -ForegroundColor Yellow
+    $confirm = Read-Host "Overwrite existing files instead? A backup is saved first. (y/N)"
+    $src = Join-Path $ScriptDir ".claude"
+    if ($confirm -eq "y") {
+        $backup = "$targetClaude.bak-$(Get-Date -Format yyyyMMdd-HHmmss)"
+        Copy-Item -Path $targetClaude -Destination $backup -Recurse
+        Write-Host "  Backup saved: $backup" -ForegroundColor Green
+        Copy-Item -Path $src -Destination (Get-Location) -Recurse -Force
         Write-Host "  .claude/ overwritten" -ForegroundColor Green
+    } else {
+        Get-ChildItem -Path $src -Recurse -File | ForEach-Object {
+            $rel = $_.FullName.Substring($src.Length).TrimStart('\','/')
+            $dest = Join-Path $targetClaude $rel
+            if (-not (Test-Path $dest)) {
+                New-Item -ItemType Directory -Force -Path (Split-Path $dest) | Out-Null
+                Copy-Item -Path $_.FullName -Destination $dest
+            }
+        }
+        Write-Host "  .claude/ merged (existing files kept)" -ForegroundColor Green
+        $mine = Join-Path $targetClaude "settings.json"
+        $theirs = Join-Path $src "settings.json"
+        if ((Get-FileHash $mine).Hash -ne (Get-FileHash $theirs).Hash) {
+            Copy-Item -Path $theirs -Destination (Join-Path $targetClaude "settings.template.json")
+            Write-Host "  Your .claude/settings.json differs from the template's." -ForegroundColor Yellow
+            Write-Host "  Merge 'permissions.deny' and 'hooks' from .claude/settings.template.json by hand, then delete it." -ForegroundColor Yellow
+        }
     }
 } else {
     Copy-Item -Path (Join-Path $ScriptDir ".claude") -Destination (Get-Location) -Recurse
