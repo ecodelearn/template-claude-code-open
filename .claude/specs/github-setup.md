@@ -4,7 +4,7 @@
 **Slug:** `template-claude-code-open::github-setup`
 **Sprint:** 1
 **Created / Criado em:** 2026-03-03
-**Last updated / Última atualização:** 2026-03-03
+**Last updated / Última atualização:** 2026-11-15
 
 ---
 
@@ -18,7 +18,7 @@ The template structure is already created locally. We need to publish it publicl
 
 ## Out of scope / Fora do escopo
 
-- GitHub Actions / CI pipelines (not needed for a template)
+- GitHub Actions / CI pipelines beyond a minimal lint (`.github/workflows/ci.yml`: shellcheck on `adopt.sh` and hooks, added 2026-11-15)
 - Automated testing of the template itself
 - Website or landing page
 
@@ -76,3 +76,5 @@ The template structure is already created locally. We need to publish it publicl
 
 - The adopt.sh currently has a `[OWNER]` placeholder — replace with actual GitHub username before pushing
 - After enabling template flag, test with: `gh repo create test-from-template --template [OWNER]/template-claude-code-open --clone`
+
+- 2026-11-15: added community health files (CONTRIBUTING, CODE_OF_CONDUCT, SECURITY, SUPPORT, CHANGELOG), issue forms, PR template and CI, inspired by r-lib/usethis. Still to do: enable "Private vulnerability reporting" and confirm the "Template repository" flag in GitHub Settings.
