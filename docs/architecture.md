@@ -233,6 +233,10 @@ Hooks fire automatically at specific lifecycle points. No invocation needed. / H
 | `auto-format.sh` | PostToolUse / Edit+Write | command (async) | Runs formatter by file extension / Roda formatador por extensão |
 | `session-end-context.sh` | SessionEnd | command | Auto-commits memory+specs (opt-in) |
 
+> **These hooks guard against mistakes; they are not a security boundary.** `block-destructive.sh` matches text patterns, so interpreters, variables or rephrased commands get past it. It parses the hook input with `jq`, falls back to `python3`, and with neither installed still matches against the raw input. `session-end-context.sh` commits `.claude/memory/` and `.claude/specs/` as they are — never write secrets there.
+>
+> **Estes hooks protegem contra descuido; não são uma barreira de segurança.** O `block-destructive.sh` compara padrões de texto, então interpretadores, variáveis ou comandos reescritos passam por ele. Ele lê a entrada com `jq`, cai para `python3` e, sem nenhum dos dois, ainda compara contra a entrada bruta. O `session-end-context.sh` commita `.claude/memory/` e `.claude/specs/` como estão — nunca escreva segredos ali.
+
 ---
 
 ## 8. agent-memory/ — persistent agent knowledge / conhecimento persistente de agents

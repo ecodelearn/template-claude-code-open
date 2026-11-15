@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
 # Hook: SessionEnd — auto-commits context files (memory + specs) at end of session
 #
+# WARNING: commits .claude/memory/ and .claude/specs/ exactly as they are (no push).
+# Never write secrets in those files.
+#
 # ENABLE: Add to .claude/settings.local.json (personal, gitignored):
 #
 #   {
